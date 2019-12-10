@@ -1,0 +1,5 @@
+<% if ( locals.context.docs && locals.context.docs.length ) { %>
+    <%- include( `../services/index.html` ) %>
+<% } else { %>
+    <%- include( `../services/${locals.context.doc.uid}.html` ) %>
+<% } %>

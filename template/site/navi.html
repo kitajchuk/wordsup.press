@@ -1,0 +1,78 @@
+<%
+const dom = locals.context.get( 'dom' );
+const navi = locals.context.get( 'navi' );
+%>
+<header class="header js-header -wrap -exp">
+    <nav class="navi js-navi">
+        <ul class="navi__logo">
+            <li class="navi__li">
+                <a class="navi__a navi__a--home js-navi-a js-navi--home" href="/">
+                    <%- include( '../svg/wordsup-logo.svg' ) %>
+                </a>
+            </li>
+        </ul>
+        <ul class="navi__main js-navi-main">
+            <% navi.items.forEach(( item ) => { %>
+                <%
+                const isDrop = (item.children ? true : false);
+                %>
+                <li class="navi__li <% if ( isDrop ) { %>navi__li--drop js-navi-drop<% } %>">
+                    <a class="navi__a navi__a--<%= item.uid %> js-navi-a js-navi--<%= item.uid %> m" href="<%= item.slug %>">
+                        <span><%= item.title %></span>
+                        <% if ( item.uid === 'contact' ) { %>
+                            <%- include( '../svg/arrow-right.svg' ) %>
+                        <% } %>
+                    </a>
+                    <% if ( isDrop ) { %>
+                        <%- include( '../svg/arrow-down-menu.svg' ) %>
+                        <ul class="navi__submenu js-navi-submenu">
+                            <% item.children.forEach(( kid ) => { %>
+                                <li class="navi__submenu__li">
+                                    <a class="navi__submenu__a js-navi-a js-navi-submenu-a js-navi--<%= kid.uid %> m" href="<%= locals.context.getUrl( kid ) %>">
+                                        <span><%= dom.RichText.asText( kid.data.title ) %></span>
+                                    </a>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
+    </nav>
+    <nav class="navi-mobile js-navi-mobile -wrap -exp">
+        <ul class="navi-mobile__ul -wrap">
+            <% navi.items.forEach(( item ) => { %>
+                <%
+                const isDrop = (item.children ? true : false);
+                %>
+                <li class="navi-mobile__li">
+                    <a class="navi-mobile__a js-navi-a js-navi--<%= item.uid %> h2" href="<%= item.slug %>">
+                        <span><%= item.title %></span>
+                        <% if ( item.uid === 'contact' ) { %>
+                            <%- include( '../svg/arrow-right.svg' ) %>
+                        <% } %>
+                    </a>
+                    <% if ( isDrop ) { %>
+                        <%- include( '../svg/arrow-down-menu.svg' ) %>
+                        <ul class="navi-mobile__submenu">
+                            <% item.children.forEach(( kid ) => { %>
+                                <li class="navi-mobile__submenu__li">
+                                    <a class="navi-mobile__submenu__a js-navi-a js-navi-submenu-a js-navi--<%= kid.uid %> h5" href="<%= locals.context.getUrl( kid ) %>">
+                                        <span><%= dom.RichText.asText( kid.data.title ) %></span>
+                                    </a>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } %>
+                </li>
+            <% }) %>
+        </div>
+    </nav>
+    <div class="navi-mobile-menu js-navi-mobile-menu">
+        <div>
+            <span class="m">Menu</span>
+            <%- include( '../svg/arrow-down-menu.svg' ) %>
+        </div>
+    </div>
+    <div class="navi-submenu-bg js-navi-submenu-bg"></div>
+</header>

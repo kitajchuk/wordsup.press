@@ -1,0 +1,39 @@
+<%
+const text = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'basic_text' );
+const praise = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'praise_touts' );
+%>
+<div class="praise">
+    <div class="masthead js-masthead -wrap-2 -exp-2 -bg--cool">
+        <div class="masthead__oh">
+            <div class="cms">
+                <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.description ) %>
+            </div>
+        </div>
+    </div>
+    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-2.jpg"></div>
+    <div class="text cms -wrap-2 -exp-2">
+        <%- locals.context.dom.RichText.asHtml( text.primary.text ) %>
+    </div>
+    <div class="praise__touts -wrap-2">
+        <% praise.items.forEach(( item, i ) => { %>
+            <div class="praise__tout -exp-2">
+                <div class="praise__l">
+                    <div class="praise__headline">
+                        <div class="fh fh--alt"><%- locals.context.newLine( item.headline ) %></div>
+                    </div>
+                    <div class="praise__text cms">
+                        <%- locals.context.dom.RichText.asHtml( item.text ) %>
+                    </div>
+                </div>
+                <div class="praise__r">
+                    <div class="praise__graphic">
+                        <img class="image js-lazy-image" data-img-src="<%= item.graphic.url %>" />
+                    </div>
+                    <div class="praise__caption cms -bg--cool">
+                        <%- locals.context.dom.RichText.asHtml( item.caption_text ) %>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>

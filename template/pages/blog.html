@@ -1,0 +1,57 @@
+<% if ( locals.context.docs ) { %>
+    <div class="blog js-view" data-url="/blog/" data-uid="blog"></div>
+<% } else { %>
+    <%
+    const entry = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'blog_text' );
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+    const date = new Date( locals.context.doc.data.date );
+    %>
+    <div class="blog">
+        <div class="masthead js-masthead -wrap-2 -exp-2 -bg--<%= locals.context.colorClass( locals.context.doc.data.color ) %>">
+            <div class="masthead__oh">
+                <div class="blog__back">
+                    <a href="/blog/" class="js-blog-back">
+                        <svg class="svg svg--arrow-right">
+                            <polygon points="22.3,0 21.5,0.7 26.5,6 0,6 0,7 26.5,7 21.5,13 22.3,13.6 28.3,6.4"/>
+                        </svg>
+                        <div class="m -lit">
+                            <strong>Back</strong>
+                        </div>
+                    </a>
+                </div>
+                <div class="cms -lit">
+                    <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.title ) %>
+                </div>
+                <div class="blog__metas">
+                    <!-- <div class="m -lit">
+                        <strong><%= months[ date.getMonth() ] %> <%= date.getDay() %>, <%= date.getFullYear() %></strong>
+                    </div> -->
+                    <div class="m -lit"><%= locals.context.doc.tags[ 0 ] %></div>
+                </div>
+            </div>
+        </div>
+        <div class="blog__entry cms -wrap-2 -exp-2">
+            <div class="blog__text">
+                <%- locals.context.dom.RichText.asHtml( entry.primary.text, null, locals.context.shortCodeIndent.bind( locals.context ) ) %>
+            </div>
+        </div>
+        <div class="blog__entry blog__comments cms -wrap-2 -exp-2">
+            <div class="blog__text blog__comments__disqus">
+                <div id="disqus_thread" data-url="<%= locals.context.config.url + locals.context.getUrl( locals.context.doc ) %>" data-identifier="<%= locals.context.doc.id %>" data-title="<%- locals.context.dom.RichText.asText( locals.context.doc.data.title ) %>"></div>
+            </div>
+        </div>
+    </div>
+<% } %>

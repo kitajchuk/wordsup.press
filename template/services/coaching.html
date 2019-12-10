@@ -1,0 +1,15 @@
+<%
+const tabs = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'service_tabs' );
+%>
+<div class="service coaching">
+    <div class="masthead js-masthead -wrap -exp-2 -bg--blue">
+        <div class="masthead__oh js-masthead-oh">
+            <div class="cms -wrapl-2 -lit">
+                <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.title ) %>
+            </div>
+        </div>
+        <div class="masthead__ya js-masthead-ya"></div>
+    </div>
+    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-3.jpg"></div>
+    <%- include( '../partials/tabs.html', { tabs } ) %>
+</div>

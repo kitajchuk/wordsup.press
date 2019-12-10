@@ -1,0 +1,17 @@
+<div class="tabs js-tabs -wrap-2 -exp-2">
+    <div class="tabs__dash js-tabs-dash">
+        <% tabs.items.forEach(( item, i ) => { %>
+            <div class="tabs__link h4 js-tabs-link" data-index="<%= i %>">
+                <span class="tabs__link__text js-tabs-link-text"><%= item.tab_label %></span>
+            </div>
+        <% }) %>
+        <div class="tabs__dash__line js-tabs-line"></div>
+    </div>
+    <div class="tabs__info js-tabs-info">
+        <% tabs.items.forEach(( item, i ) => { %>
+            <div class="tabs__content cms js-tabs-content" data-index="<%= i %>" data-label="<%= item.tab_label %>">
+                <%- locals.context.dom.RichText.asHtml( item.tab_content, null, locals.context.shortCodeInclude.bind( locals.context ) ) %>
+            </div>
+        <% }) %>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+.cms {
+    p + p {
+        margin-top: 25px;
+    }
+
+    h2 + p {
+        margin-top: 25px;
+
+        .resources & {
+            margin-top: 5px;
+        }
+    }
+
+    h2 > a {
+        .resources & {
+            border-bottom: 1px solid $blue;
+        }
+    }
+
+    p + ul {
+        margin-top: 25px;
+    }
+
+    ul + p {
+        margin-top: 25px;
+    }
+
+    .-ident p + ul {
+        margin-top: 0;
+    }
+
+    p a, ul a {
+        // @include font-family-bold();
+        border-bottom: 1px solid $grey-blue;
+
+        .-lit & {
+            border-bottom: 1px solid $white;
+        }
+    }
+
+    p + h2 {
+        .resources & {
+            margin-top: 50px;
+        }
+    }
+
+    em {
+        .service & {
+            display: block;
+            padding: 50px 30px;
+            background-color: $grey-warm;
+            @include h3();
+        }
+    }
+
+    ul {
+        li {
+            display: block;
+            position: relative;
+            padding-left: 45px;
+
+            &:before {
+                content: "";
+                width: 30px;
+                height: 2px;
+                background-color: $grey-blue;
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                transform: translate3d( 0, 16px, 0 );
+
+                .blog & {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 6px;
+                    transform: translate3d( 29px, 14px, 0 );
+                }
+
+                @include respond( $tablet-width ) {
+                    transform: translate3d( 0, 14px, 0 );
+                }
+
+                .editing & {
+                    background-color: $orange;
+                }
+
+                .coaching & {
+                    background-color: $blue;
+                }
+
+                .ghostwriting & {
+                    background-color: $teal;
+                }
+            }
+        }
+
+        li + li {
+            margin-top: 15px;
+        }
+    }
+
+    &.-lit p {
+        color: $white;
+    }
+
+    &.-blk p {
+        color: $black;
+    }
+
+    &.-fsbold p {
+        @include font-family-semibold();
+    }
+}

@@ -1,0 +1,52 @@
+<%
+const dom = locals.context.dom;
+const navi = locals.context.navi;
+const site = locals.context.site;
+const services = navi.items.find(( item ) => {
+    return item.uid === 'services';
+});
+%>
+<footer class="footer js-footer -wrap -exp-2">
+    <a class="footer__col footer__logo" href="/">
+        <%- include( '../svg/wordsup-logo.svg' ) %>
+    </a>
+    <nav class="footer__col footer__navi">
+        <% navi.items.forEach(( item ) => { %>
+            <% if ( item.uid !== 'services' ) { %>
+                <a class="h4 -grey" href="<%= item.slug %>"><%= item.title %></a>
+            <% } %>
+        <% }) %>
+    </nav>
+    <nav class="footer__col footer__services">
+        <div class="h4 -grey">Services</div>
+        <% services.children.forEach(( kid ) => { %>
+            <a class="m" href="<%= locals.context.getUrl( kid ) %>">
+                <%= dom.RichText.asText( kid.data.title ) %>
+            </a>
+        <% }) %>
+    </nav>
+    <div class="footer__col footer__contact">
+        <div class="h4 -grey">Start a Conversation</div>
+        <div class="footer__social">
+            <a class="m" href="<%= site.data.linkedin || '#' %>" target="_blank">Linkedin</a>
+            <a class="m" href="<%= site.data.twitter || '#' %>" target="_blank">Twitter</a>
+            <a class="m" href="<%= site.data.facebook || '#' %>" target="_blank">Facebook</a>
+            <a class="m" href="/contact/">Contact</a>
+        </div>
+    </div>
+    <div class="footer__col footer__signup">
+        <div class="h4 -grey">Keep Up</div>
+        <div class="m">Sign up for my newsletter to receive blog updates, writing tips and more.</div>
+        <form class="form form--signup js-form" data-url="/api/mailchimp/list/signup/" data-action="signup" action="">
+            <div class="form__block">
+                <div class="form__field form__group">
+                    <input class="form__input js-form-field" name="email_address" type="email" placeholder="Email Address" />
+                    <button class="form__sub" type="submit">Submit</button>
+                </div>
+            </div>
+            <div class="form__message h3">
+                <span>Thanks for signing up!</span>
+            </div>
+        </form>
+    </div>
+</footer>

@@ -1,0 +1,45 @@
+<%
+const touts = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'service_touts' );
+const masthead = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'masthead_tout' );
+%>
+<div class="services">
+    <div class="masthead js-masthead -wrap -exp-2 -bg--cool">
+        <div class="masthead__oh js-masthead-oh">
+            <div class="cms -wrapl-2">
+                <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.title ) %>
+            </div>
+        </div>
+        <div class="masthead__ya js-masthead-ya">
+            <div class="cms -flit">
+                <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.description ) %>
+            </div>
+        </div>
+    </div>
+    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-1.jpg"></div>
+    <div class="touts -wrap">
+        <% touts.items.forEach(( item, i ) => { %>
+            <div class="touts__tout -wrap">
+                <div class="h2"><%= item.headline %></div>
+                <div class="h5 -fsbold"><%= item.cta %></div>
+                <div class="p"><%= item.text %></div>
+                <div class="p">
+                    <a class="a" href="<%= locals.context.getUrl( item.service_link ) %>"><%- locals.context.dom.RichText.asHtml( item.link_text ) %> &raquo;</a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <div class="masthead js-masthead -wrap -exp-2 -lit -bg--<%= masthead.primary.background_color.toLowerCase() %>">
+        <div class="masthead__oh js-masthead-oh">
+            <div class="cms -wrapl-2">
+                <div class="fh -lit">
+                    <%- locals.context.newLine( masthead.primary.headline ) %>
+                </div>
+            </div>
+        </div>
+        <div class="masthead__ya js-masthead-ya">
+            <div class="cms">
+                <%- locals.context.dom.RichText.asHtml( masthead.primary.text, null, locals.context.hyperLink.bind( locals.context ) ) %>
+            </div>
+        </div>
+    </div>
+</div>

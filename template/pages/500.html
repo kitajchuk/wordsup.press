@@ -1,0 +1,18 @@
+<%
+const error = locals.context.get( 'error' );
+%>
+<div class="notfound">
+    <div class="masthead js-masthead -wrap-2 -exp-2 -bg--cool">
+        <div class="masthead__oh">
+            <div class="cms">
+                <h1>Oops&hellip;</h1>
+            </div>
+        </div>
+    </div>
+    <div class="text cms -wrap-2 -exp-2">
+        <h2>Page Error</h2>
+<pre class="-expt -spot">
+<%- error.toString().replace( /\</g, '&lt;' ).replace( /\>/g, '&gt;' ) %>
+</pre>
+    </div>
+</div>

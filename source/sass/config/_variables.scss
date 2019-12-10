@@ -1,0 +1,129 @@
+/******************************************************************************
+ * Fonts
+*******************************************************************************/
+$font-path: "/fonts/";
+$font-family-regular: "HK-Grotesk-Regular";
+$font-family-bold: "HK-Grotesk-Bold";
+$font-family-condensed: "Balboa-ExtraCondensed";
+$font-family-light: "HK-Grotesk-Light";
+$font-family-semibold: "HK-Grotesk-Semibold";
+
+
+
+/******************************************************************************
+ * Colors
+*******************************************************************************/
+$black: #000;
+$white: #fff;
+$blue: #659cc1;
+$blue-light: #ccdae7;
+$teal: #87c3bc;
+$orange: #e7972d;
+$grey-cool: #f1f3f9;
+$grey-warm: #f2f2f2;
+$grey-medium: #979797;
+$grey-dark: #4a4a4a;
+$grey-blue: #606576;
+$grey-light: #d3d3d3;
+
+
+
+/******************************************************************************
+ * Grid
+*******************************************************************************/
+$grid-length: 12;
+$grid-columns: 12 11 10 9 8 7 6 5 4 3 2 1;
+
+
+
+/******************************************************************************
+ * Spacing
+*******************************************************************************/
+$expander-1: 3.515625%;
+$expander-2: $expander-1 * 2;
+$padding-1: 4.6875%;
+$padding-2: 9.375%;
+
+
+
+/******************************************************************************
+ * Sizes
+*******************************************************************************/
+$bind-width: 1440px;
+$tablet-width: 1024px;
+$mobile-width: 768px;
+$premobile-width: 850px;
+$premobile-bind: 640px;
+$mobile-bind: 480px;
+$banner-height: 62px;
+
+
+
+
+/******************************************************************************
+ * Typography
+*******************************************************************************/
+$p-size: 16px;
+$p-size-2: 18px;
+$p-size-3: 20px;
+$p-line: 27 / 16;
+$m-size: 14px;
+$m-size-2: 16px;
+$m-size-2: 16px;
+$m-line: 19 / 16;
+$h1-size: 45px;
+$h1-size-2: 40px;
+$h1-line: 54 / 45;
+$h2-size: 30px;
+$h2-size-2: 28px;
+$h2-line: 42 / 30;
+$h3-size: 28px;
+$h3-size-2: 24px;
+$h3-line: 36 / 24;
+$h4-size: 22px;
+$h4-line: 22 / 22;
+$h5-size: 18px;
+$h5-line: 30 / 18;
+$fh-size: 70px;
+$fh-size-2: 55px;
+$fh-size-3: 45px;
+$fh-size-4: 35px;
+$fh-line: 70 / 70;
+
+
+
+/******************************************************************************
+ * Breakpoints
+*******************************************************************************/
+$break-desktop-large: 2200px;
+$break-desktop: 1920px;
+$break-laptop-full: 1680px;
+$break-laptop-medium: 1440px;
+$break-ipad-pro-width: 1366px;
+$break-tablet-full: 1280px;
+$break-tablet-medium: 1024px;
+$break-tablet-small: 768px;
+$break-mobile-full: 640px;
+$break-mobile-medium: 480px;
+$break-mobile-small: 320px;
+
+
+
+/******************************************************************************
+ * Animations
+*******************************************************************************/
+$ease: cubic-bezier( 0.25, 0.1, 0.25, 1 );
+$long-duration: 600ms;
+$base-duration: 400ms;
+$fast-duration: 200ms;
+
+
+
+/******************************************************************************
+ * Layering
+*******************************************************************************/
+$z_layer_behind: -1;
+$z_layer_menu: 1000;
+$z_layer_screen: 1001;
+$z_layer_header: 1002;
+$z_layer_intro: 1003;

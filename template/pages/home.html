@@ -1,0 +1,99 @@
+<%
+const feature = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'home_features' );
+const services = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'home_which_one_are_you' );
+const tips = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'home_writing_tips' );
+const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'home_testimonial' );
+%>
+<div class="home">
+    <div class="masthead js-masthead -wrap -exp">
+        <div class="masthead__oh js-masthead-oh"></div>
+        <div class="masthead__ya js-masthead-ya">
+            <div class="cms -flit">
+                <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.description ) %>
+            </div>
+        </div>
+    </div>
+    <div class="features js-features -wrapl-2">
+        <div class="features__belt">
+            <% feature.items.forEach(( slide, i ) => { %>
+                <div class="features__poster js-lazy-image js-features-poster <%= (i === 0 ? 'is-active' : '') %>" style="background-color:<%= slide.background_color %>;">
+                    <div class="features__lockup">
+                        <div class="features__headline">
+                            <div class="fh <%= (i === 0 ? '-blk' : '-lit') %> <% if ( slide.use_quotes === 'Yes' ) { %>-qt<% } %>"><%- locals.context.newLine( slide.headline ) %></div>
+                        </div>
+                        <div class="features__byline cms <%= (i === 0 ? '-blk' : '-lit') %> -fsbold">
+                            <%- locals.context.dom.RichText.asHtml( slide.attribution ) %>
+                        </div>
+                    </div>
+                    <div class="features__graphic js-lazy-image" data-img-src="<%= slide.slide_image.url %>"></div>
+                </div>
+            <% }) %>
+        </div>
+        <div class="features__banner js-features-banner -wrapl-2 -wrapr">
+            <div class="features__index m -lit">Slide <span class="js-features-curr">1</span> of <%= feature.items.length %></div>
+            <div class="features__navi">
+                <div class="features__prev js-features-prev">
+                    <%- include( '../svg/arrow-right.svg' ) %>
+                </div>
+                <div class="features__next js-features-next">
+                    <%- include( '../svg/arrow-right.svg' ) %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list services -exp-2 -wrap-2">
+        <div class="list__graphic">
+            <img class="image js-lazy-image" data-img-src="<%= services.primary.graphic.url %>" />
+        </div>
+        <div class="list__items">
+            <div class="fh fh--alt"><%= services.primary.headline %></div>
+            <% services.items.forEach(( item, i ) => { %>
+                <a class="list__link p" href="<%= locals.context.getUrl( item.link_page ) %>">
+                    <span><%= item.link_text %></span>
+                    <%- include( '../svg/arrow-right.svg' ) %>
+                </a>
+            <% }) %>
+        </div>
+    </div>
+    <div class="testimonial">
+        <img class="testimonial__graphic js-lazy-image" data-img-src="/img/ui/banner-5.jpg" />
+        <div class="testimonial__tout -wrap -exp-2">
+            <div class="testimonial__svg">
+                <%- include( '../svg/quote.svg' ) %>
+            </div>
+            <div class="testimonial__headline fh -exp">
+                <%= testimonial.primary.headline %>
+            </div>
+            <div class="testimonial__quote p -lit -wrap">
+                <%= testimonial.primary.quote %>
+            </div>
+            <div class="testimonial__annotation cms -lit -exp">
+                <%- locals.context.dom.RichText.asHtml( testimonial.primary.annotation ) %>
+            </div>
+            <div class="testimonial__link">
+                <a class="h2 -lit" href="/praise/">
+                    <span>Read all testimonials</span>
+                    <%- include( '../svg/arrow-right.svg' ) %>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="list tips -exp-2 -wrap-2">
+        <div class="list__items">
+            <div class="fh fh--alt"><%- locals.context.newLine( tips.primary.headline ) %></div>
+            <% tips.items.forEach(( item, i ) => { %>
+                <a class="list__link p" href="<%= locals.context.getUrl( item.link_page ) %>">
+                    <span><%= item.link_text %></span>
+                    <%- include( '../svg/arrow-right.svg' ) %>
+                </a>
+            <% }) %>
+        </div>
+        <div class="list__graphic">
+            <img class="image js-lazy-image" data-img-src="<%= tips.primary.graphic.url %>" />
+        </div>
+    </div>
+    <div class="blog -exp -bg--cool -wrap-2">
+        <div class="blog__headline fh fh--alt">Latest from the blog</div>
+        <div class="blog__posts js-view" data-url="/blog/" data-uid="blog-home"></div>
+    </div>
+</div>

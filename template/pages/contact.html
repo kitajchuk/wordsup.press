@@ -1,0 +1,16 @@
+<%
+const text = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'basic_text' );
+%>
+<div class="contact">
+    <div class="masthead js-masthead -wrap-2 -exp-2 -bg--cool">
+        <div class="masthead__oh">
+            <div class="cms">
+                <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.description ) %>
+            </div>
+        </div>
+    </div>
+    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-2.jpg"></div>
+    <div class="text cms -wrap-2 -exp-2">
+        <%- locals.context.dom.RichText.asHtml( text.primary.text, null, locals.context.shortCodeInclude.bind( locals.context ) ) %>
+    </div>
+</div>

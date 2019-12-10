@@ -1,0 +1,37 @@
+.svg {
+    transition: fill $fast-duration $ease;
+    }
+.svg--logo {
+    width: 113.2px;
+    height: 50.6px;
+
+    .logo-big {
+        display: none;
+    }
+
+    @include respond-min( $tablet-width + 1px ) {
+        width: 175px;
+        height: 78.224px;
+
+        .logo-mid {
+            display: none;
+        }
+        .logo-big {
+            display: block;
+        }
+    }
+}
+.svg--arrow-right {
+    width: 28.299px;
+    height: 13.63px;
+}
+.svg--arrow-down-menu {
+    width: 7.813px;
+    height: 4.57px;
+    fill: $grey-medium;
+}
+.svg--quote {
+    height: 32px;
+    width: 32px;
+    fill: $teal;
+}

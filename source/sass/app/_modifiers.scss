@@ -1,0 +1,148 @@
+.-fpo {
+    @include wrap();
+    padding-top: $padding-2;
+    padding-bottom: $padding-2;
+    position: relative;
+    background-color: $black;
+    text-align: center;
+
+    &:after {
+        @include fh();
+        font-size: $fh-size-2;
+        color: $white;
+        content: attr( data-fpo );
+        position: relative;
+    }
+}
+
+
+
+/******************************************************************************
+ * Display
+*******************************************************************************/
+.-exp {
+    @include exp();
+}
+.-exp-2 {
+    @include exp2();
+}
+.-wrap {
+    @include wrap();
+}
+.-wrap-2 {
+    @include wrap2();
+}
+.-wrapr {
+    @include wrapr();
+}
+.-wrapr-2 {
+    @include wrapr2();
+}
+.-wrapl {
+    @include wrapl();
+}
+.-wrapl-2 {
+    @include wrapl2();
+}
+.-vtop {
+    vertical-align: top;
+}
+.-vbot {
+    vertical-align: bottom;
+}
+.-full {
+    width: 100%;
+}
+.-tall {
+    height: 100%;
+}
+.-block {
+    display: block;
+}
+.-pad {
+    padding-top: $expander-1;
+}
+.-ident {
+    padding-left: $padding-2;
+    padding-right: $padding-2;
+}
+
+
+
+/******************************************************************************
+ * Background Images
+*******************************************************************************/
+.-cover {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.-cover--top {
+    background-position: 50% 0;
+}
+.-cover--right {
+    background-position: 100% 50%;
+}
+.-cover--bottom {
+    background-position: 50% 100%;
+}
+.-cover--left {
+    background-position: 0 50%;
+}
+
+
+
+/******************************************************************************
+ * Typography
+*******************************************************************************/
+.-text--center {
+    text-align: center;
+}
+.-text--right {
+    text-align: right;
+}
+.-text--left {
+    text-align: left;
+}
+.-blk {
+    color: $black;
+}
+.-lit {
+    color: $white;
+}
+.-grey {
+    color: $grey-medium;
+}
+.-bg--black {
+    background-color: $black;
+}
+.-bg--teal {
+    background-color: $teal;
+}
+.-bg--orange {
+    background-color: $orange;
+}
+.-bg--blue {
+    background-color: $blue;
+}
+.-bg--blue-light {
+    background-color: $blue-light;
+}
+.-bg--cool {
+    background-color: $grey-cool;
+}
+.-bg--grey-blue {
+    background-color: $grey-blue;
+}
+.-bg--grey-light {
+    background-color: $grey-light;
+}
+.-fzero {
+    font-size: 0;
+}
+.-flit {
+    @include font-family-light();
+}
+.-fsbold {
+    @include font-family-semibold();
+}

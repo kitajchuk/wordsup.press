@@ -1,0 +1,8 @@
+.intro {
+    pointer-events: auto;
+    z-index: $z_layer_intro;
+
+    &.is-active {
+        z-index: $z_layer_intro;
+        }
+}

@@ -1,0 +1,37 @@
+<%
+const profile = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'profile' );
+%>
+<div class="about">
+    <div class="masthead js-masthead -wrap-2 -exp-2 -bg--cool">
+        <div class="masthead__oh">
+            <div class="cms">
+                <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.description ) %>
+            </div>
+        </div>
+    </div>
+    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-4.jpg"></div>
+    <div class="profile -exp">
+        <div class="profile__banner">
+            <div class="profile__pic">
+                <img class="image js-lazy-image" data-img-src="<%= profile.primary.pic.url %>" />
+            </div>
+            <div class="profile__bio">
+                <div class="cms -lit">
+                    <h3><%= profile.primary.bio %></h3>
+                </div>
+            </div>
+        </div>
+        <div class="profile__info -exp-2">
+            <% profile.items.forEach(( item, i ) => { %>
+                <div class="cols">
+                    <div class="cols__label">
+                        <div class="fh fh--alt"><%= item.headline %></div>
+                    </div>
+                    <div class="cols__info cms">
+                        <%- locals.context.dom.RichText.asHtml( item.text ) %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>

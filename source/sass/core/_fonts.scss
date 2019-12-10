@@ -1,0 +1,36 @@
+/******************************************************************************
+ * Font Declarations
+ *
+ * Use `$font-path` which is determined in `webpack.config.js`
+*******************************************************************************/
+
+@font-face {
+    font-family: $font-family-regular;
+    src: url( "#{$font-path}#{$font-family-regular}.woff" ) format( "woff" );
+    font-style: normal;
+    font-stretch: normal;
+}
+@font-face {
+    font-family: $font-family-bold;
+    src: url( "#{$font-path}#{$font-family-bold}.woff" ) format( "woff" );
+    font-style: normal;
+    font-stretch: normal;
+}
+@font-face {
+    font-family: $font-family-condensed;
+    src: url( "#{$font-path}#{$font-family-condensed}.woff" ) format( "woff" );
+    font-style: normal;
+    font-stretch: normal;
+}
+@font-face {
+    font-family: $font-family-light;
+    src: url( "#{$font-path}#{$font-family-light}.woff" ) format( "woff" );
+    font-style: normal;
+    font-stretch: normal;
+}
+@font-face {
+    font-family: $font-family-semibold;
+    src: url( "#{$font-path}#{$font-family-semibold}.woff" ) format( "woff" );
+    font-style: normal;
+    font-stretch: normal;
+}

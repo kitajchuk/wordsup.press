@@ -1,0 +1,21 @@
+<%
+const tabs = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'service_tabs' );
+const banner = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'cta_banner' );
+%>
+<div class="service ghostwriting">
+    <div class="masthead js-masthead -wrap -exp-2 -bg--teal">
+        <div class="masthead__oh js-masthead-oh">
+            <div class="cms -wrapl-2 -lit">
+                <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.title ) %>
+            </div>
+        </div>
+        <div class="masthead__ya js-masthead-ya"></div>
+    </div>
+    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-4.jpg"></div>
+    <%- include( '../partials/tabs.html', { tabs } ) %>
+    <div class="banner -exp-2 -wrap-2 -bg--teal -lit">
+        <div class="cms h2">
+            <%- locals.context.dom.RichText.asHtml( banner.primary.text, null, locals.context.hyperLink.bind( locals.context ) ) %>
+        </div>
+    </div>
+</div>
