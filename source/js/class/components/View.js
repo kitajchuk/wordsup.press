@@ -68,9 +68,6 @@ class View {
     load () {
         return new Promise(( resolve ) => {
             const cache = core.cache.get( this.id );
-            const query = {
-                format: "json"
-            };
 
             // Pre-render from cache
             if ( cache ) {
@@ -81,8 +78,7 @@ class View {
             $.ajax({
                 url: this.endpoint,
                 dataType: this.dataType,
-                method: this.method,
-                data: query
+                method: this.method
 
             }).then(( json ) => {
                 // Update the cache from AJAX

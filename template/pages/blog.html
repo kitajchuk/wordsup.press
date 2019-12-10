@@ -1,5 +1,5 @@
 <% if ( locals.context.docs ) { %>
-    <div class="blog js-view" data-url="/blog/" data-uid="blog"></div>
+    <div class="blog js-view" data-url="/blog/index.json" data-uid="blog"></div>
 <% } else { %>
     <%
     const entry = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'blog_text' );
