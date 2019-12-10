@@ -182,11 +182,14 @@ const requestLoc = ( url ) => {
 // Request a sitemap location for API
 const requestApi = ( url ) => {
     return new Promise(( resolve, reject ) => {
-        const api = url.loc[ 0 ].replace( buildConfig.url, baseUrl ).replace( baseUrl, `${baseUrl}/api` );
+        const api = url.loc[ 0 ].replace( buildConfig.url, baseUrl );
 
         request({
             url: api,
-            method: "GET"
+            method: "GET",
+            qs: {
+                format: "json"
+            }
 
         }).then(( json ) => {
             resolve( json );
