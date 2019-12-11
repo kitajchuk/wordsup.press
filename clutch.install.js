@@ -7,6 +7,7 @@ const rootClutch = path.join( root, ".clutch" );
 const rootTemplatePartials = path.join( root, "template", "partials" );
 const rootNotes = path.join( root, ".notes" );
 const rootServer = path.join( root, "server" );
+const rootServices = path.join( root, "functions", "services" );
 const rootHobo = path.join( rootNodeModules, "properjs-hobo" );
 const child_process = require( "child_process" );
 const files = require( "./server/core/files" );
@@ -65,5 +66,11 @@ console.log( "[Clutch] Installing server node_modules..." );
 
 child_process.execSync( `cd ${rootServer} && npm i` );
 
-// 7.0 done
+
+// 7.0 services install
+console.log( "[Clutch] Installing functions node_modules..." );
+
+child_process.execSync( `cd ${rootServices} && npm i` );
+
+// 8.0 done
 console.log( "[Clutch] Install complete!" );
