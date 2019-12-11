@@ -5,19 +5,11 @@ exports.handler = ( event, context, callback ) => {
 
     console.log( "EVENT", event );
 
-    // Parse the JSON payload
-    try {
-        request.body = JSON.parse( event.body );
-
-    } catch ( error ) {
-        console.log( "ERROR", error );
-
-        // callback( error, null );
-    }
+    request.body = JSON.parse( event.body );
 
     console.log( "REQUEST", request );
 
-    if ( event.body._action === "Signup" ) {
+    if ( request.body._action === "Signup" ) {
         mailchimp.exec( request ).then(( response ) => {
             callback( null, {
                 statusCode: 200,
