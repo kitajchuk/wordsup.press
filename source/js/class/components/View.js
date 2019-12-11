@@ -47,6 +47,10 @@ class View {
         try {
             this.json = JSON.parse( json );
 
+            if ( typeof this.json === "string" ) {
+                this.json = JSON.parse( this.json );
+            }
+
         } catch ( error ) {
             core.log( "warn", error );
         }
