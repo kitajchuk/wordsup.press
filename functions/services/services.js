@@ -2,6 +2,8 @@ exports.handler = ( event, context, callback ) => {
     const recaptcha = require( "./recaptcha" );
     const mailchimp = require( "./mailchimp" );
 
+    console.log( "EVENT", event );
+
     if ( event.body._action === "Signup" ) {
         mailchimp.exec( event ).then(( response ) => {
             callback( null, {
