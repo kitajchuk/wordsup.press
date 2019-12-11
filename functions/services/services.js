@@ -15,6 +15,8 @@ exports.handler = ( event, context, callback ) => {
         callback( error, null );
     }
 
+    console.log( "REQUEST", request );
+
     if ( event.body._action === "Signup" ) {
         mailchimp.exec( request ).then(( response ) => {
             callback( null, {

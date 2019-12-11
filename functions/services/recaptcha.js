@@ -1,10 +1,7 @@
-const path = require( "path" );
-const fs = require( "fs" );
 const request = require( "request-promise" );
-const lager = require( "properjs-lager" );
+const nodemailer = require( "nodemailer" );
 const validator = require( "./validator" );
 const mailchimp = require( "./mailchimp" );
-const nodemailer = require( "nodemailer" );
 
 
 
@@ -24,7 +21,9 @@ const checkRecaptcha = ( event ) => {
 
         }).then(( json ) => {
             if ( json.success ) {
-                resolve( json );
+                resolve({
+                    success: true
+                });
 
             } else {
                 resolve({
@@ -103,24 +102,6 @@ Click "Reply" to respond to ${event.body._form.email.value}
         });
     });
 };
-const postFormOptin = ( event ) => {
-    return new Promise(( resolve, reject ) => {
-        validator.validateRequest( event ).then(() => {
-            // Opt-in Mailchimp subscriber
-            mailchimp.optin( event ).then(( json ) => {
-                resolve({
-                    success: true
-                });
-            });
-
-        }).catch(() => {
-            resolve({
-                success: false,
-                message: "Form fields did not validate"
-            });
-        });
-    });
-};
 
 
 
@@ -142,8 +123,16 @@ module.exports = {
             } else if ( event.body._action === "Special-Offer" ) {
                 checkRecaptcha( event ).then(( check ) => {
                     if ( check.success ) {
-                        postFormOptin( event ).then(( response ) => {
-                            resolve( response );
+                        validator.validateRequest( event ).then(() => {
+                            mailchimp.optin( event ).then(( response ) => {
+                                resolve( response );
+                            });
+
+                        }).catch(() => {
+                            resolve({
+                                success: false,
+                                message: "Form fields did not validate"
+                            });
                         });
 
                     } else {

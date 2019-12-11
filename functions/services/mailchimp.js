@@ -1,7 +1,4 @@
-const path = require( "path" );
-const fs = require( "fs" );
 const request = require( "request-promise" );
-const lager = require( "properjs-lager" );
 const validator = require( "./validator" );
 
 
@@ -27,12 +24,13 @@ const optinMailchimpListSignup = ( event ) => {
             }
 
         }).then(( json ) => {
+            console.log( "SUBSCRIBED", json );
             resolve({
                 success: true,
                 message: "Mailchimp signup success"
             });
 
-        }).catch(( error ) => {
+        }).catch(() => {
             resolve({
                 success: false,
                 message: "Mailchimp signup failure"
@@ -51,7 +49,7 @@ module.exports = {
                     resolve( response );
                 });
 
-            }).catch(( error ) => {
+            }).catch(() => {
                 resolve({
                     success: false,
                     message: "Form fields did not validate"
