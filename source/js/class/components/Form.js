@@ -123,10 +123,7 @@ class Form {
             url: this.elemData.url,
             dataType: "json",
             method: "POST",
-            data: this.formData,
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
+            payload: this.formData
         });
     }
 
