@@ -102,7 +102,7 @@ const postFormOptin = ( event ) => {
     return new Promise(( resolve, reject ) => {
         validator.validateRequest( event ).then(() => {
             // Opt-in Mailchimp subscriber
-            mailchimp.optin( event.body._form.email.value ).then(( json ) => {
+            mailchimp.optin( event ).then(( json ) => {
                 if ( json.success ) {
                     lager.cache( "Mailchimp optin success" );
                     lager.data( json );
