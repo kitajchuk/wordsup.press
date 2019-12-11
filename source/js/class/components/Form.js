@@ -79,7 +79,7 @@ class Form {
         this.getFields();
         this.parseForm();
         this.postForm().then(( json ) => {
-            // console.log( json );
+            console.log( json );
             if ( json.success ) {
                 this.handleSuccess( json );
 
@@ -120,20 +120,14 @@ class Form {
 
 
     postForm () {
-        // return $.ajax({
-        //     url: this.elemData.url,
-        //     dataType: "json",
-        //     method: "POST",
-        //     data: this.formData,
-        //     headers: {
-        //         "Content-Type": "application/x-www-form-urlencoded"
-        //     }
-        // });
-        return new Promise(( resolve ) => {
-            console.log( "Clutch form data", this.formData );
-            resolve({
-                success: true
-            });
+        return $.ajax({
+            url: this.elemData.url,
+            dataType: "json",
+            method: "POST",
+            data: this.formData,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
         });
     }
 
