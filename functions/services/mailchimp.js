@@ -11,7 +11,7 @@ const getMailchimpBuff = () => {
 };
 const optinMailchimpListSignup = ( event ) => {
     return new Promise(( resolve, reject ) => {
-        const email = event.body._form.email_address.value;
+        const email = event.body._form.email.value;
         const url = `https://us11.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_LIST_ID}/members`;
 
         request({
