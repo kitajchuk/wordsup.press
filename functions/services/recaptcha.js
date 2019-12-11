@@ -129,7 +129,7 @@ const postFormOptin = ( event ) => {
 
 
 module.exports = {
-    exec ( data ) {
+    exec ( event ) {
         return new Promise(( resolve, reject ) => {
             if ( event.body._action === "Contact" || event.body._action === "Coaching" ) {
                 checkRecaptcha( event ).then(( check ) => {
