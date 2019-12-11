@@ -1,9 +1,7 @@
-import recaptcha from "./recaptcha";
-import mailchimp from "./mailchimp";
-
-
-
 exports.handler = ( event, context, callback ) => {
+    const recaptcha = require( "./recaptcha" );
+    const mailchimp = require( "./mailchimp" );
+
     if ( event.body._action === "Signup" ) {
         mailchimp.exec( event ).then(( response ) => {
             callback( null, {
