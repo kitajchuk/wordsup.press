@@ -37,7 +37,7 @@ const services = navi.items.find(( item ) => {
     <div class="footer__col footer__signup">
         <div class="h4 -grey">Keep Up</div>
         <div class="m">Sign up for my newsletter to receive blog updates, writing tips and more.</div>
-        <form class="form form--signup js-form" data-url="/api/mailchimp/list/signup/" data-action="signup" action="">
+        <form class="form form--signup js-form" data-url="/.netlify/functions/formhandler" data-action="Signup">
             <div class="form__block">
                 <div class="form__field form__group">
                     <input class="form__input js-form-field" name="email_address" type="email" placeholder="Email Address" />
