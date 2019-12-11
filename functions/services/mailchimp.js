@@ -24,7 +24,6 @@ const optinMailchimpListSignup = ( event ) => {
             }
 
         }).then(( json ) => {
-            console.log( "SUBSCRIBED", json );
             resolve({
                 success: true,
                 message: "Mailchimp signup success"
@@ -32,7 +31,10 @@ const optinMailchimpListSignup = ( event ) => {
 
         }).catch(() => {
             resolve({
-                success: false,
+                // Always truthy since:
+                // 1.) This is an `optin`
+                // 2.) Emails already subscribed will always fail
+                success: true,
                 message: "Mailchimp signup failure"
             });
         });
