@@ -94,8 +94,12 @@ const getSite = ( req ) => {
                         navItem.slug = `/${slug}/`;
                     }
 
-                    if ( slice.primary.page.uid === "services" ) {
-                        navItem.children = docs.service;
+                    // Iterate type mappings and reverse the lookup
+                    for ( let type in core.config.generate.mappings ) {
+                        // The collection mapping value matches a page UID
+                        if ( core.config.generate.mappings[ type ] === slice.primary.page.uid ) {
+                            navItem.children = docs[ type ];
+                        }
                     }
 
                     navi.items.push( navItem );
@@ -229,11 +233,15 @@ const getDocs = () => {
     return new Promise(( resolve, reject ) => {
         let docs = {};
         const getDocs = ( p ) => {
-            cache.api.form( "everything" )
-                .pageSize( 100 )
-                .page( p )
-                .ref( cache.api.master() )
-                .submit()
+            const options = {
+                fetchLinks: core.config.api.fetchLinks || [],
+                pageSize: 100,
+                page: p,
+                ref: cache.api.master()
+            };
+
+            cache.api
+                .query( "", options )
                 .then(( json ) => {
                     json.results.forEach(( doc ) => {
                         if ( !docs[ doc.type ] ) {
