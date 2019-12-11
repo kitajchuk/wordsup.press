@@ -1,4 +1,4 @@
-// import $ from "properjs-hobo";
+import $ from "properjs-hobo";
 // import router from "../../router";
 import * as core from "../../core";
 
