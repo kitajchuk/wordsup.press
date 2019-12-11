@@ -103,18 +103,9 @@ const postFormOptin = ( event ) => {
         validator.validateRequest( event ).then(() => {
             // Opt-in Mailchimp subscriber
             mailchimp.optin( event ).then(( json ) => {
-                if ( json.success ) {
-                    lager.cache( "Mailchimp optin success" );
-                    lager.data( json );
-
-                } else {
-                    lager.error( "Mailchimp optin failure" );
-                    lager.data( error );
-                }
-            });
-
-            resolve({
-                success: true
+                resolve({
+                    success: true
+                });
             });
 
         }).catch(() => {

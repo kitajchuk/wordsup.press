@@ -9,8 +9,9 @@ const validator = require( "./validator" );
 const getMailchimpBuff = () => {
     return Buffer.from( `any:${process.env.MAILCHIMP_API_KEY}` ).toString( "base64" );
 };
-const optinMailchimpListSignup = ( email ) => {
+const optinMailchimpListSignup = ( event ) => {
     return new Promise(( resolve, reject ) => {
+        const email = event.body._form.email_address.value;
         const url = `https://us11.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_LIST_ID}/members`;
 
         request({
@@ -26,20 +27,15 @@ const optinMailchimpListSignup = ( email ) => {
             }
 
         }).then(( json ) => {
-            lager.cache( "Mailchimp signup success" );
-            lager.data( json );
-
             resolve({
-                success: true
+                success: true,
+                message: "Mailchimp signup success"
             });
 
         }).catch(( error ) => {
-            lager.error( "Mailchimp signup failure" );
-            lager.data( error );
-
             resolve({
                 success: false,
-                error
+                message: "Mailchimp signup failure"
             });
         });
     });
@@ -52,7 +48,7 @@ module.exports = {
         return new Promise(( resolve, reject ) => {
             if ( event.body._action === "Signup" ) {
                 validator.validateRequest( event ).then(() => {
-                    optinMailchimpListSignup( event.body._form.email_address.value ).then(( response ) => {
+                    optinMailchimpListSignup( event ).then(( response ) => {
                         resolve( response );
                     });
 
@@ -69,7 +65,7 @@ module.exports = {
 
     optin ( event ) {
         return new Promise(( resolve, reject ) => {
-            optinMailchimpListSignup( event.body._form.email_address.value ).then(( response ) => {
+            optinMailchimpListSignup( event ).then(( response ) => {
                 resolve( response );
             })
         });
