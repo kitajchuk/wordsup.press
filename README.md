@@ -4,7 +4,8 @@ wordsup.press
 > A Developer SDK for Prismic.io.
 
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c2715ad9-4380-4ac9-a795-baf1a0854b7a/deploy-status)](https://app.netlify.com/sites/wordsup-press/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b972ec5d-0ef5-498b-a3c6-2f69cc6f3471/deploy-status)](https://app.netlify.com/sites/wordsup-press/deploys)
+
 
 
 <img style="width:100%;" src="https://images.squarespace-cdn.com/content/5925b6cb03596e075b56bfe2/1575596648820-5KJZNU062RQ6Q95L9GYG/Kitajchuk_Clutch_Keyimage.jpg?format=2500w&content-type=image%2Fjpeg" />
