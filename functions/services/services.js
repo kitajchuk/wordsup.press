@@ -3,16 +3,16 @@ exports.handler = ( event, context, callback ) => {
     const mailchimp = require( "./mailchimp" );
     const request = {};
 
-    // console.log( "EVENT", event );
+    console.log( "EVENT", event );
 
     // Parse the JSON payload
     try {
         request.body = JSON.parse( event.body );
 
     } catch ( error ) {
-        // console.log( "ERROR", error );
+        console.log( "ERROR", error );
 
-        callback( error, null );
+        // callback( error, null );
     }
 
     console.log( "REQUEST", request );

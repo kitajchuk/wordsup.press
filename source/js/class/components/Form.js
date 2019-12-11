@@ -104,10 +104,6 @@ class Form {
 
     parseForm () {
         this.formData = {
-            _page: {
-                url: window.location.href,
-                title: document.title
-            },
             _action: this.action,
             _form: {}
         };
