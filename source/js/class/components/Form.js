@@ -50,7 +50,7 @@ class Form {
             return false;
         });
 
-        if ( this.elemData.action === "signup" ) {
+        if ( this.elemData.action === "Signup" ) {
             this.element.on( "keypress", ( e ) => {
                 if ( e.keyCode === 13 ) {
                     e.preventDefault();
@@ -79,7 +79,6 @@ class Form {
         this.getFields();
         this.parseForm();
         this.postForm().then(( json ) => {
-            console.log( json );
             if ( json.success ) {
                 this.handleSuccess( json );
 

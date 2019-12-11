@@ -1,0 +1,18 @@
+{
+    "title": "WordsUp Services",
+    "name": "wordsup-services",
+    "description": "Form handling with third-party integrations.",
+    "version": "1.0.0",
+    "keywords": [
+        "google",
+        "recaptcha",
+        "mailchimp"
+    ],
+    "dependencies": {
+        "properjs-lager": "^0.1.0",
+        "request": "^2.87.0",
+        "request-promise": "^4.2.2",
+        "striptags": "^3.1.1",
+        "nodemailer": "^4.7.0"
+    }
+}
