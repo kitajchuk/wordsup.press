@@ -12,7 +12,7 @@ const envVars = {
 };
 const config = {
     // The URL of your actual site, Netlify domain: `bs.services`
-    url: "https://wordsup-press.netlify.com",
+    url: "https://wordsup.press",
     // Homepage UID, make sure it matches what you use in Prismic
     homepage: "home",
     // Page Not Found UID — 404

@@ -3,11 +3,11 @@ exports.handler = ( event, context, callback ) => {
     const mailchimp = require( "./mailchimp" );
     const request = {};
 
-    console.log( "EVENT", event );
+    // console.log( "EVENT", event );
 
     request.body = JSON.parse( event.body );
 
-    console.log( "REQUEST", request );
+    // console.log( "REQUEST", request );
 
     if ( request.body._action === "Signup" ) {
         mailchimp.exec( request ).then(( response ) => {
