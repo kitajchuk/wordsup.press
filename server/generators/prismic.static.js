@@ -95,7 +95,7 @@ const cleanStatic = ( json ) => {
             let regex = new RegExp( `^${buildConfig.url}\/{0,1}|\/$`, "g" );
             const slug = url.loc[ 0 ].replace( regex, "" );
             const slugHtml = slug ? `${slug}/index.html` : "index.html";
-            const slugJson = slug ? `${slug}/index.json` : "";
+            const slugJson = slug ? `${slug}/index.json` : "index.json";
             const uris = slugHtml.split( "/" );
             const urisJson = slugJson.split( "/" );
             const files = {

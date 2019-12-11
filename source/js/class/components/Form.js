@@ -1,5 +1,4 @@
 import $ from "properjs-hobo";
-// import router from "../../router";
 import * as core from "../../core";
 
 
@@ -81,6 +80,8 @@ class Form {
         this.postForm().then(( json ) => {
             try {
                 json = JSON.parse( json );
+
+                core.log( json );
 
             } catch ( error ) {
                 core.log( "warn", error );

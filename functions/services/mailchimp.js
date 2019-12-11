@@ -55,6 +55,12 @@ module.exports = {
                     optinMailchimpListSignup( event.body._form.email_address.value ).then(( response ) => {
                         resolve( response );
                     });
+
+                }).catch(( error ) => {
+                    resolve({
+                        success: false,
+                        error
+                    });
                 });
             }
         });
