@@ -29,9 +29,14 @@ const checkRecaptcha = ( event ) => {
             } else {
                 resolve({
                     success: false,
-                    problem: "ReCAPTCHA did not validate"
+                    message: "ReCAPTCHA did not validate"
                 });
             }
+        }).catch(() => {
+            resolve({
+                success: false,
+                message: "ReCAPTCHA did not validate"
+            });
         });
     });
 };
@@ -85,7 +90,7 @@ Click "Reply" to respond to ${event.body._form.email.value}
                 } else {
                     resolve({
                         success: false,
-                        problem: "Nodemailer could not send email"
+                        message: "Nodemailer could not send email"
                     });
                 }
             });
@@ -93,7 +98,7 @@ Click "Reply" to respond to ${event.body._form.email.value}
         }).catch(() => {
             resolve({
                 success: false,
-                problem: "Form fields did not validate"
+                message: "Form fields did not validate"
             });
         });
     });
@@ -111,7 +116,7 @@ const postFormOptin = ( event ) => {
         }).catch(() => {
             resolve({
                 success: false,
-                problem: "Form fields did not validate"
+                message: "Form fields did not validate"
             });
         });
     });
@@ -135,8 +140,15 @@ module.exports = {
                 });
 
             } else if ( event.body._action === "Special-Offer" ) {
-                postFormOptin( event ).then(( response ) => {
-                    resolve( response );
+                checkRecaptcha( event ).then(( check ) => {
+                    if ( check.success ) {
+                        postFormOptin( event ).then(( response ) => {
+                            resolve( response );
+                        });
+
+                    } else {
+                        resolve( check );
+                    }
                 });
             }
         });

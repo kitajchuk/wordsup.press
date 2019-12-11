@@ -46,19 +46,17 @@ const optinMailchimpListSignup = ( event ) => {
 module.exports = {
     exec ( event ) {
         return new Promise(( resolve, reject ) => {
-            if ( event.body._action === "Signup" ) {
-                validator.validateRequest( event ).then(() => {
-                    optinMailchimpListSignup( event ).then(( response ) => {
-                        resolve( response );
-                    });
-
-                }).catch(( error ) => {
-                    resolve({
-                        success: false,
-                        error
-                    });
+            validator.validateRequest( event ).then(() => {
+                optinMailchimpListSignup( event ).then(( response ) => {
+                    resolve( response );
                 });
-            }
+
+            }).catch(( error ) => {
+                resolve({
+                    success: false,
+                    message: "Form fields did not validate"
+                });
+            });
         });
     },
 
