@@ -79,6 +79,13 @@ class Form {
         this.getFields();
         this.parseForm();
         this.postForm().then(( json ) => {
+            try {
+                json = JSON.parse( json );
+
+            } catch ( error ) {
+                core.log( "warn", error );
+            }
+
             if ( json.success ) {
                 this.handleSuccess( json );
 

@@ -16,7 +16,7 @@ exports.handler = ( event, context, callback ) => {
         mailchimp.exec( request ).then(( response ) => {
             callback( null, {
                 statusCode: 200,
-                body: response
+                body: JSON.stringify( response )
             });
         });
 
@@ -24,7 +24,7 @@ exports.handler = ( event, context, callback ) => {
         recaptcha.exec( request ).then(( response ) => {
             callback( null, {
                 statusCode: 200,
-                body: response
+                body: JSON.stringify( response )
             });
         });
     }
