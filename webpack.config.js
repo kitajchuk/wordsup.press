@@ -27,8 +27,11 @@ const webpackConfig = {
         new BrowserSyncPlugin({
             open: true,
             host: "localhost",
-            port: config.browser.port,
-            proxy: `http://localhost:${config.express.port}`
+            port: config.express.port,
+            proxy: `http://localhost:${config.express.port}`,
+            files: [
+                "template/**/*.html"
+            ]
         })
     ],
 
