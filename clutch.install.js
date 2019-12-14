@@ -6,7 +6,6 @@ const rootPackageLock = path.join( root, "package-lock.json" );
 const rootClutch = path.join( root, ".clutch" );
 const rootTemplatePartials = path.join( root, "template", "partials" );
 const rootNotes = path.join( root, ".notes" );
-const rootServer = path.join( root, "server" );
 const rootServices = path.join( root, "functions", "services" );
 const rootHobo = path.join( rootNodeModules, "properjs-hobo" );
 const child_process = require( "child_process" );
@@ -61,16 +60,10 @@ console.log( "[Clutch] Building properjs-hobo..." );
 child_process.execSync( `npm run bootstrap:hobo` );
 
 
-// 6.0 server install
-console.log( "[Clutch] Installing server node_modules..." );
-
-child_process.execSync( `cd ${rootServer} && npm i` );
-
-
-// 7.0 services install
+// 6.0 services install
 console.log( "[Clutch] Installing functions node_modules..." );
 
 child_process.execSync( `cd ${rootServices} && npm i` );
 
-// 8.0 done
+// 7.0 done
 console.log( "[Clutch] Install complete!" );
