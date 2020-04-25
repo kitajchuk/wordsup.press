@@ -14,7 +14,7 @@ const navi = locals.context.get( 'navi' );
         <ul class="navi__main js-navi-main">
             <% navi.items.forEach(( item ) => { %>
                 <%
-                const isDrop = (item.children ? true : false);
+                const isDrop = (item.children && item.uid !== 'blog' ? true : false);
                 %>
                 <li class="navi__li <% if ( isDrop ) { %>navi__li--drop js-navi-drop<% } %>">
                     <a class="navi__a navi__a--<%= item.uid %> js-navi-a js-navi--<%= item.uid %> m" href="<%= item.slug %>">
@@ -43,7 +43,7 @@ const navi = locals.context.get( 'navi' );
         <ul class="navi-mobile__ul -wrap">
             <% navi.items.forEach(( item ) => { %>
                 <%
-                const isDrop = (item.children ? true : false);
+                const isDrop = (item.children && item.uid !== 'blog' ? true : false);
                 %>
                 <li class="navi-mobile__li">
                     <a class="navi-mobile__a js-navi-a js-navi--<%= item.uid %> h2" href="<%= item.slug %>">
