@@ -525,22 +525,22 @@
 }
 .touts__tout:nth-child( 2 ) {
     .a {
-        color: $teal;
-        border-bottom: 1px solid $teal;
-    }
-
-    &:before {
-        background-color: $teal;
-    }
-}
-.touts__tout:nth-child( 3 ) {
-    .a {
         color: $blue;
         border-bottom: 1px solid $blue;
     }
 
     &:before {
         background-color: $blue;
+    }
+}
+.touts__tout:nth-child( 3 ) {
+    .a {
+        color: $teal;
+        border-bottom: 1px solid $teal;
+    }
+
+    &:before {
+        background-color: $teal;
     }
 }
 .touts__tout:nth-child( 4 ) {
