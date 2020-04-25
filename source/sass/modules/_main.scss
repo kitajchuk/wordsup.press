@@ -409,7 +409,7 @@
 }
 .blog__posts {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     position: relative;
