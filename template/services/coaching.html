@@ -2,7 +2,7 @@
 const tabs = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'service_tabs' );
 %>
 <div class="service coaching">
-    <div class="masthead js-masthead -wrap -exp-2 -bg--blue">
+    <div class="masthead js-masthead -wrap -exp-2 -bg--<%= locals.context.colorClass( locals.context.doc.data.color ) %>">
         <div class="masthead__oh js-masthead-oh">
             <div class="cms -wrapl-2 -lit">
                 <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.title ) %>

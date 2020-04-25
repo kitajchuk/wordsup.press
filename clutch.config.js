@@ -41,7 +41,8 @@ const config = {
             "post.image",
             "post.description",
             "post.date",
-            "post.color"
+            "post.color",
+            "service.color",
         ]
     },
     // Templating config

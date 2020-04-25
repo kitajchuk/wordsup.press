@@ -113,20 +113,17 @@
 .-grey {
     color: $grey-medium;
 }
-.-bg--black {
-    background-color: $black;
-}
 .-bg--teal {
     background-color: $teal;
 }
 .-bg--orange {
     background-color: $orange;
 }
+.-bg--black {
+    background-color: $black;
+}
 .-bg--blue {
     background-color: $blue;
-}
-.-bg--blue-light {
-    background-color: $blue-light;
 }
 .-bg--cool {
     background-color: $grey-cool;
@@ -136,6 +133,9 @@
 }
 .-bg--grey-light {
     background-color: $grey-light;
+}
+.-bg--blue-light {
+    background-color: $blue-light;
 }
 .-fzero {
     font-size: 0;

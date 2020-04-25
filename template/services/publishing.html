@@ -3,7 +3,7 @@ const tabs = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type 
 const banner = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'cta_banner' );
 %>
 <div class="service publishing">
-    <div class="masthead js-masthead -wrap -exp-2 -bg--grey-blue">
+    <div class="masthead js-masthead -wrap -exp-2 -bg--<%= locals.context.colorClass( locals.context.doc.data.color ) %>">
         <div class="masthead__oh js-masthead-oh">
             <div class="cms -wrapl-2 -lit">
                 <%- locals.context.dom.RichText.asHtml( locals.context.doc.data.title ) %>

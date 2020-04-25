@@ -512,45 +512,49 @@
     .a p {
         display: inline-block;
     }
-}
-.touts__tout:nth-child( 1 ) {
-    .a {
-        color: $orange;
-        border-bottom: 1px solid $orange;
+
+    &.-color--orange {
+        .a {
+            color: $orange;
+            border-bottom: 1px solid $orange;
+        }
+
+        &:before {
+            background-color: $orange;
+        }
     }
 
-    &:before {
-        background-color: $orange;
-    }
-}
-.touts__tout:nth-child( 2 ) {
-    .a {
-        color: $blue;
-        border-bottom: 1px solid $blue;
+    &.-color--blue {
+        .a {
+            color: $blue;
+            border-bottom: 1px solid $blue;
+        }
+
+        &:before {
+            background-color: $blue;
+        }
     }
 
-    &:before {
-        background-color: $blue;
-    }
-}
-.touts__tout:nth-child( 3 ) {
-    .a {
-        color: $teal;
-        border-bottom: 1px solid $teal;
+    &.-color--teal {
+        .a {
+            color: $teal;
+            border-bottom: 1px solid $teal;
+        }
+
+        &:before {
+            background-color: $teal;
+        }
     }
 
-    &:before {
-        background-color: $teal;
-    }
-}
-.touts__tout:nth-child( 4 ) {
-    .a {
-        color: $grey-blue;
-        border-bottom: 1px solid $grey-blue;
-    }
+    &.-color--grey-blue {
+        .a {
+            color: $grey-blue;
+            border-bottom: 1px solid $grey-blue;
+        }
 
-    &:before {
-        background-color: $grey-blue;
+        &:before {
+            background-color: $grey-blue;
+        }
     }
 }
 
