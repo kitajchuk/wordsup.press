@@ -237,7 +237,7 @@ const getDocs = () => {
                 fetchLinks: core.config.api.fetchLinks || [],
                 pageSize: 100,
                 page: p,
-                ref: cache.api.master()
+                ref: getRef()
             };
 
             cache.api
@@ -294,13 +294,22 @@ const getNavi = ( type ) => {
  *
  */
 const getRef = ( req, api ) => {
-    let ref = api.master();
+    let ref = null;
 
-    if ( req && req.cookies && req.cookies[ prismic.previewCookie ] ) {
-        ref = req.cookies[ prismic.previewCookie ];
+    // Preview sessions
+    // Formerly used for the live node app deployments...
+    // if ( req && req.cookies && req.cookies[ prismicJS.previewCookie ] ) {
+    //     ref = req.cookies[ prismicJS.previewCookie ];
+    // }
+
+    // Prismic releases
+    if ( core.config.api.release ) {
+        ref = cache.api.refs.find(( ref ) => {
+            return (ref.label === core.config.api.release);
+        });
     }
 
-    return ref;
+    return ref ? ref.ref : cache.api.masterRef.ref;
 };
 
 
