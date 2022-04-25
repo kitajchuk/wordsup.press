@@ -249,7 +249,7 @@
     .fh {
         br {
             @include respond( $mobile-width ) {
-                display: inline-block;
+                display: inline;
             }
         }
     }
