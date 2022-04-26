@@ -247,12 +247,10 @@
     padding-top: $padding-2;
 
     .fh {
-        br {
-            @include respond( $mobile-width ) {
-                display: inline;
-            }
+        @include respond( $mobile-width ) {
+            white-space: nowrap;
         }
-    }
+      }
 
     @include respond( $premobile-width ) {
         @include wrap();
@@ -430,9 +428,13 @@
     }
 }
 .blog__wrap {
-    padding-bottom: 78%;
+    padding-bottom: 100%;
     position: relative;
     display: block;
+
+    @include respond( $premobile-bind ) {
+      padding-bottom: 78%;
+    }
 }
 .blog__title {
     position: absolute;

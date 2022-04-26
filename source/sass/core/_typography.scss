@@ -126,9 +126,9 @@
         padding: 30px;
     }
 
-    .fh br {
+    .fh {
         @include respond( $tablet-width ) {
-            display: none;
+            white-space: nowrap;
         }
     }
 }
