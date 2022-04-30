@@ -27,7 +27,7 @@ static/*.html
 static/**/*.html
 static/*.json
 static/**/*.json
-!static/img/icon/manifest.json
+!static/manifest.json
 
 
 # Node / npm
