@@ -23,7 +23,7 @@
     "consolidate": "^0.15.1",
     "cookie-parser": "^1.4.3",
     "csurf": "^1.9.0",
-    "ejs": "^2.6.1",
+    "ejs": "^3.1.7",
     "express": "^4.16.3",
     "pm2": "^3.0.4",
     "prismic-dom": "^2.0.6",
