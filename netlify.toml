@@ -4,3 +4,8 @@
 
 [functions]
   directory = "functions/"
+
+[[headers]]
+  for "/manifest.json"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
