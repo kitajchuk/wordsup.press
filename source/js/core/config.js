@@ -1,6 +1,3 @@
-import Easing from "properjs-easing";
-
-
 /**
  *
  * @public
@@ -19,17 +16,6 @@ const config = {
      *
      */
     homepage: "home",
-
-
-    /**
-     *
-     * @public
-     * @member defaultEasing
-     * @memberof core.config
-     * @description The default easing function for javascript Tweens.
-     *
-     */
-    defaultEasing: Easing.easeInOutCubic,
 
 
     /**

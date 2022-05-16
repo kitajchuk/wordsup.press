@@ -2,37 +2,30 @@ const path = require( "path" );
 const root = path.resolve( __dirname );
 const source = path.join( root, "source" );
 const config = require( "./clutch.config" );
-const lager = require( "properjs-lager" );
 const nodeModules = "node_modules";
-const webpack = require( "webpack" );
-const autoprefixer = require( "autoprefixer" );
 const BrowserSyncPlugin = require( "browser-sync-webpack-plugin" );
-const CompressionPlugin = require( "compression-webpack-plugin" );
+const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 
 
 const webpackConfig = {
-    mode: "none",
+    mode: process.env.NODE_ENV === "production" ? "production" : "development",
 
 
-    devtool: "source-map",
+    devtool: process.env.NODE_ENV === "production" ? false : "eval-source-map",
 
 
     plugins: [
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                postcss: [autoprefixer( { browsers: ["last 2 versions"] } )]
-            }
-        }),
         new BrowserSyncPlugin({
             open: true,
             host: "localhost",
             port: config.express.port,
             proxy: `http://localhost:${config.express.port}`,
             files: [
-                "template/**/*.html"
-            ]
-        })
+                "template/**/*.html",
+            ],
+        }),
+        new ESLintWebpackPlugin(),
     ],
 
 
@@ -56,60 +49,47 @@ const webpackConfig = {
     module: {
         rules: [
             {
-                test: /source\/js\/.*\.js$/,
-                exclude: /node_modules|vendor/,
-                loader: "eslint-loader",
-                enforce: "pre",
-                options: {
-                    emitError: true,
-                    emitWarning: false,
-                    failOnError: true,
-                    quiet: true
-                }
-            },
-            {
-                test: /source\/js\/.*\.js$/,
-                exclude: /node_modules|vendor/,
+                test: /source\/js\/.*\.js$|node_modules\/[properjs-|konami-|paramalama].*/i,
                 use: [
                     {
                         loader: "babel-loader",
                         options: {
-                            presets: ["env"]
-                        }
-                    }
-                ]
-            },
-            {
-                test: /(hobo|hobo.build)\.js$/,
-                use: ["expose-loader?hobo"]
+                            presets: ["@babel/preset-env"],
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(sass|scss)$/,
-                exclude: /node_modules|vendor/,
+                exclude: /node_modules/,
                 use: [
-                    `file-loader?name=../css/[name].css`,
-                    "postcss-loader",
+                    "style-loader",
+                    "css-loader",
+                    {
+                        loader: "resolve-url-loader",
+                        options: {
+                            root: path.resolve( __dirname, "static" ),
+                        },
+                    },
                     {
                         loader: "sass-loader",
                         options: {
-                            outputStyle: "compressed"
-                        }
-                    }
-                ]
+                            sourceMap: true,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.svg$/,
                 exclude: /node_modules/,
                 use: [
-                    "svg-inline-loader"
-                ]
-            }
-        ]
-    }
+                    "svg-inline-loader",
+                ],
+            },
+        ],
+    },
 };
 
 
 
-module.exports = () => {
-    return webpackConfig;
-};
+module.exports = webpackConfig;

@@ -6,8 +6,8 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "export NODE_ENV=sandbox ; ./node_modules/.bin/pm2 --no-daemon --watch --ignore-watch '*.log' -a -l pm2.log -o out.log -e err.log start app.js",
-    "stop": "./node_modules/.bin/pm2 stop 'all'"
+    "start": "export NODE_ENV=sandbox ; npx pm2 --no-daemon --watch --ignore-watch '*.log' -a -l pm2.log -o out.log -e err.log start app.js",
+    "stop": "npx pm2 stop 'all'"
   },
   "contributors": [
     {

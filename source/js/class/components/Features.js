@@ -112,7 +112,7 @@ class Features {
     destroy () {
         this.prev.off();
         this.next.off();
-        this.resizer.destroy();
+        this.resizer.stop();
     }
 }
 

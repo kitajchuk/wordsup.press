@@ -11,7 +11,7 @@ const envVars = {
     webhookSecret: rootConfig.prismic.webhookSecret || process.env.PRISMIC_API_SECRET
 };
 const config = {
-    // The URL of your actual site, Netlify domain: `bs.services`
+    // The URL of your actual site
     url: "https://wordsup.press",
     // Homepage UID, make sure it matches what you use in Prismic
     homepage: "home",
@@ -26,7 +26,7 @@ const config = {
     // Environments
     env: {
         sandbox: (process.env.NODE_ENV === "sandbox"),
-        netlify: (process.env.NODE_ENV === "netlify")
+        production: (process.env.NODE_ENV === "production")
     },
     // Content service API
     api: {

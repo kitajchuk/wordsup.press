@@ -106,7 +106,7 @@ class Tabs {
 
 
     destroy () {
-        this.resizer.destroy();
+        this.resizer.stop();
     }
 }
 
