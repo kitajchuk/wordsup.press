@@ -18,7 +18,9 @@ const praise = locals.context.doc.data.slices.find( ( slice ) => slice.slice_typ
         height="200"
     />
     <div class="text cms -wrap-2 -exp-2">
-        <%- locals.context.dom.RichText.asHtml( text.primary.text ) %>
+        <h2 class="h3">
+            <%- locals.context.dom.RichText.asText( text.primary.text ) %>
+        </h2>
     </div>
     <div class="praise__touts -wrap-2">
         <% praise.items.forEach(( item, i ) => { %>

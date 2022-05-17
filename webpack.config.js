@@ -60,13 +60,6 @@ const webpackConfig = {
                     },
                 ],
             },
-            {
-                test: /\.svg$/,
-                exclude: /node_modules/,
-                use: [
-                    "svg-inline-loader",
-                ],
-            },
         ],
     },
 };

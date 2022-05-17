@@ -1,8 +1,6 @@
 import $ from "properjs-hobo";
 import Controller from "properjs-controller";
 import PageController from "properjs-pagecontroller";
-// import paramalama from "paramalama";
-// import * as gsap from "gsap/all";
 import Controllers from "./class/Controllers";
 import * as core from "./core";
 import navi from "./modules/navi";
