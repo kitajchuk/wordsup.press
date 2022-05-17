@@ -13,7 +13,6 @@
  *
  *
  */
-const path = require( "path" );
 const lager = require( "properjs-lager" );
 const fs = require( "fs" );
 const request = require( "request-promise" );
