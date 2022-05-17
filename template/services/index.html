@@ -15,7 +15,13 @@ const masthead = locals.context.doc.data.slices.find( ( slice ) => slice.slice_t
             </div>
         </div>
     </div>
-    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-1.jpg"></div>
+    <img 
+        class="graphic graphic--banner" 
+        src="/img/ui/banner-1.jpg"
+        alt="Graphical banner"
+        width="1503"
+        height="200"
+    />
     <div class="touts -wrap">
         <% touts.items.forEach(( item, i ) => { %>
             <div class="touts__tout -wrap -color--<%= locals.context.colorClass( item.service_link.data.color ) %>">

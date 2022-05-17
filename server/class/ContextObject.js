@@ -71,15 +71,8 @@ class ContextObject {
 
     getPageDescription () {
         const site = this.get( "site" );
-        const doc = this.get( "doc" );
-        let desc = null;
 
-        // Homepage
-        if ( doc && (doc.uid === config.homepage) || !doc ) {
-            desc = site.data.description;
-        }
-
-        return desc;
+        return site.data.description;
     }
 
     getUrl ( doc ) {
@@ -100,6 +93,10 @@ class ContextObject {
 
     newLine ( str ) {
         return str.replace( /\n/g, '<br />' );
+    }
+
+    cleanLines ( str ) {
+        return str.replace( /\n/g, '' );
     }
 
     hyperLink ( type, elem, text ) {

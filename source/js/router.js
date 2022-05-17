@@ -58,6 +58,11 @@ const router = {
     load () {
         return new Promise(( resolve ) => {
             this.controller = new PageController({
+                routes: [
+                    "/",
+                    ":view",
+                    ":view/:uid"
+                ],
                 transitionTime: this.animDuration
             });
             this.controller.on( "transition-out", this.changePageOut.bind( this ) );

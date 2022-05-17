@@ -1,5 +1,4 @@
 import * as core from "../core";
-import ImageController from "./controllers/ImageController";
 import BaseController from "./controllers/BaseController";
 import View from "./components/View";
 import Form from "./components/Form";
@@ -70,23 +69,11 @@ class Controllers {
         this.push( "features", core.dom.main.find( ".js-features" ), BaseController, Features );
         this.push( "disqus", core.dom.main.find( "#disqus_thread" ), BaseController, Disqus );
 
-        this.images = this.element.find( core.config.lazyImageSelector );
-        this.imageController = new ImageController( this.images );
-        this.imageController.on( "preloaded", () => {
-            this.init();
-
-            if ( this.callback ) {
-                this.callback();
-            }
-        });
+        this.init();
     }
 
 
     destroy () {
-        if ( this.imageController ) {
-            this.imageController.destroy();
-        }
-
         this.kill();
     }
 }

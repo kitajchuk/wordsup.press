@@ -32,7 +32,9 @@ class Analytics {
         log( "Analytics pageview", window.location.href );
 
         // Google Analytics
-        window.gtag( "event", "page_view", { send_to: "UA-129523951-1" } );
+        if ( window.gtag ) {
+            window.gtag( "event", "page_view", { send_to: "UA-129523951-1" } );
+        }
 
         // Document title
         this.setDocumentTitle( doc.data.title );

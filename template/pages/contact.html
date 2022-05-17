@@ -9,7 +9,13 @@ const text = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type 
             </div>
         </div>
     </div>
-    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-2.jpg"></div>
+    <img 
+        class="graphic graphic--banner" 
+        src="/img/ui/banner-2.jpg"
+        alt="Graphical banner"
+        width="1503"
+        height="200"
+    />
     <div class="text cms -wrap-2 -exp-2">
         <%- locals.context.dom.RichText.asHtml( text.primary.text, null, locals.context.shortCodeInclude.bind( locals.context ) ) %>
     </div>

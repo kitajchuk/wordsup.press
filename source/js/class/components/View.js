@@ -1,7 +1,5 @@
 import * as core from "../../core";
 import $ from "properjs-hobo";
-import ImageController from "../controllers/ImageController";
-// import paramalama from "paramalama";
 
 
 /**
@@ -118,9 +116,7 @@ class View {
      * @method exec
      *
      */
-    exec () {
-        this.controllers.image = new ImageController( this.element.find( core.config.lazyImageSelector ) );
-    }
+    exec () {}
 
 
     /**
@@ -131,11 +127,7 @@ class View {
      * @method destroy
      *
      */
-    destroy () {
-        if ( this.controllers.image ) {
-            this.controllers.image.destroy();
-        }
-    }
+    destroy () {}
 }
 
 

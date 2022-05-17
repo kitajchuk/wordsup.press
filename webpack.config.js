@@ -22,6 +22,7 @@ const webpackConfig = {
             port: config.express.port,
             proxy: `http://localhost:${config.express.port}`,
             files: [
+                "static/css/*.css",
                 "template/**/*.html",
             ],
         }),
@@ -55,26 +56,6 @@ const webpackConfig = {
                         loader: "babel-loader",
                         options: {
                             presets: ["@babel/preset-env"],
-                        },
-                    },
-                ],
-            },
-            {
-                test: /\.(sass|scss)$/,
-                exclude: /node_modules/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    {
-                        loader: "resolve-url-loader",
-                        options: {
-                            root: path.resolve( __dirname, "static" ),
-                        },
-                    },
-                    {
-                        loader: "sass-loader",
-                        options: {
-                            sourceMap: true,
                         },
                     },
                 ],
