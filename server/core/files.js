@@ -24,11 +24,11 @@ module.exports = {
 
     write ( path, content, sync ) {
         if ( sync ) {
-            return fs.writeFileSync( path, JSON.stringify( content ), "utf8" );
+            return fs.writeFileSync( path, JSON.stringify( content ) );
 
         } else {
             return new Promise(( resolve, reject ) => {
-                fs.writeFile( path, JSON.stringify( content ), "utf8", ( error ) => {
+                fs.writeFile( path, JSON.stringify( content ), ( error ) => {
                     if ( error ) {
                         reject( error );
 
@@ -42,11 +42,11 @@ module.exports = {
 
     writeStr ( path, content, sync ) {
         if ( sync ) {
-            return fs.writeFileSync( path, String( content ), "utf8" );
+            return fs.writeFileSync( path, String( content ) );
 
         } else {
             return new Promise(( resolve, reject ) => {
-                fs.writeFile( path, String( content ), "utf8", ( error ) => {
+                fs.writeFile( path, String( content ), ( error ) => {
                     if ( error ) {
                         reject( error );
 

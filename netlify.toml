@@ -10,6 +10,11 @@
   [headers.values]
     Access-Control-Allow-Origin = "*"
 
+[[headers]]
+  for = "/*/index.json"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"
+
 [context.production]
   environment = { NODE_VERSION = "16.14.2" }
 

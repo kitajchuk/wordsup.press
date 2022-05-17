@@ -139,6 +139,10 @@ class ContextObject {
 
         return ret;
     }
+
+    headingSwap ( html, curr, swap ) {
+        return html.replace( `<${curr}>`, `<${swap} class="${curr}">` ).replace( `</${curr}>`, `</${swap}>` );
+    }
 }
 
 
