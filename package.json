@@ -13,7 +13,7 @@
     "watch:sass": "npx chokidar \"source/sass/**/*.scss\" -c \"npm run build:sass\"",
     "server": "export NODE_ENV=sandbox ; npx pm2 --no-daemon --watch -a start ./ecosystem.config.js",
     "server:stop": "npx pm2 stop 'all' --watch",
-    "build": "npm run build:sass ; npm run build:bundle ; npm run static:build",
+    "build": "npm run bootstrap ; npm run build:sass ; npm run build:bundle ; npm run static:build",
     "build:sass": "node-sass --output-style 'compressed' ./source/sass/screen.scss ./static/css/screen.css",
     "build:bundle": "export NODE_ENV=production ; npx webpack --env production",
     "static:build": "export NODE_ENV=production ; export CLUTCH_CLEAN=0 ; node clutch.static.js",
