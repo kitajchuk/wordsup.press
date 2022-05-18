@@ -657,13 +657,7 @@
     }
 }
 .tabs__content {
-    position: absolute;
-    left: 0;
-    top: -12px;
-    width: 100%;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity $base-duration $ease;
+    display: none;
 
     & + .tabs__content {
         @include respond( $mobile-width ) {
@@ -672,11 +666,7 @@
     }
 
     @include respond( $mobile-width ) {
-        position: relative;
-        top: auto;
-        left: auto;
-        opacity: 1;
-        pointer-events: auto;
+        display: block;
     }
 
     .resources &:before {
@@ -690,9 +680,7 @@
     }
 
     &.is-active {
-        opacity: 1;
-        pointer-events: auto;
-        position: relative;
+        display: block;
     }
 }
 .tabs__link {
