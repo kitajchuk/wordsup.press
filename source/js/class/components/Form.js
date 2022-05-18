@@ -1,4 +1,3 @@
-import $ from "properjs-hobo";
 import * as core from "../../core";
 
 
@@ -77,16 +76,9 @@ class Form {
         this.element.addClass( "is-processing" );
         this.getFields();
         this.parseForm();
-        this.postForm().then(( json ) => {
-            try {
-                json = JSON.parse( json );
-
-                core.log( json );
-
-            } catch ( error ) {
-                core.log( "warn", error );
-            }
-
+        this.postForm()
+        .then( ( res ) => res.json() )
+        .then(( json ) => {
             if ( json.success ) {
                 this.handleSuccess( json );
 
@@ -123,11 +115,12 @@ class Form {
 
 
     postForm () {
-        return $.ajax({
-            url: this.elemData.url,
-            dataType: "json",
+        return fetch( this.elemData.url, {
             method: "POST",
-            payload: this.formData
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify( this.formData )
         });
     }
 

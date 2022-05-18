@@ -1,6 +1,11 @@
 <%
 const text = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'basic_text' );
 const download = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'download' );
+const heading = locals.context.headingSwap(
+    locals.context.dom.RichText.asHtml( text.primary.text, null, locals.context.shortCodeInclude.bind( locals.context ) ),
+    'h3',
+    'h2'
+);
 %>
 <div class="special-offer">
     <div class="masthead js-masthead -wrap-2 -exp-2 -bg--cool">
@@ -10,9 +15,15 @@ const download = locals.context.doc.data.slices.find( ( slice ) => slice.slice_t
             </div>
         </div>
     </div>
-    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-1.jpg"></div>
+    <img 
+        class="graphic graphic--banner" 
+        src="/img/ui/banner-1.jpg"
+        alt="Graphical banner"
+        width="1503"
+        height="200"
+    />
     <div class="text cms -wrap-2 -exp-2">
-        <%- locals.context.dom.RichText.asHtml( text.primary.text, null, locals.context.shortCodeInclude.bind( locals.context ) ) %>
+        <%- heading %>
     </div>
     <div class="download js-download" data-file="<%= download.primary.download.url %>" data-name="<%= download.primary.download.name %>"></div>
 </div>

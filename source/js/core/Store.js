@@ -103,7 +103,7 @@ class Store {
      *
      */
     slug ( uri ) {
-        uri = uri.replace( /^\/|\/$/g, "" ).replace( /\/|\?|\&|=|\s/g, "-" ).toLowerCase();
+        uri = uri.replace( /^\/|\/$/g, "" ).replace( /\/|\?|&|=|\s/g, "-" ).toLowerCase();
 
         return uri;
     }

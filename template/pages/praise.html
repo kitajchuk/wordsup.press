@@ -10,9 +10,17 @@ const praise = locals.context.doc.data.slices.find( ( slice ) => slice.slice_typ
             </div>
         </div>
     </div>
-    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-2.jpg"></div>
+    <img 
+        class="graphic graphic--banner" 
+        src="/img/ui/banner-2.jpg"
+        alt="Graphical banner"
+        width="1503"
+        height="200"
+    />
     <div class="text cms -wrap-2 -exp-2">
-        <%- locals.context.dom.RichText.asHtml( text.primary.text ) %>
+        <h2 class="h3">
+            <%- locals.context.dom.RichText.asText( text.primary.text ) %>
+        </h2>
     </div>
     <div class="praise__touts -wrap-2">
         <% praise.items.forEach(( item, i ) => { %>
@@ -27,7 +35,15 @@ const praise = locals.context.doc.data.slices.find( ( slice ) => slice.slice_typ
                 </div>
                 <div class="praise__r">
                     <div class="praise__graphic">
-                        <img class="image js-lazy-image" data-img-src="<%= item.graphic.url %>" />
+                        <img 
+                            class="image" 
+                            src="<%= item.graphic.mobile.url %>"
+                            src="<%= item.graphic.url %> 2x, <%= item.graphic.mobile.url %> 1.5x"
+                            alt="Picture of book"
+                            width="<%= item.graphic.mobile.dimensions.width %>"
+                            height="<%= item.graphic.mobile.dimensions.height %>"
+                            loading="<%= (i === 0) ? 'eager' : 'lazy' %>"
+                        />
                     </div>
                     <div class="praise__caption cms -bg--cool">
                         <%- locals.context.dom.RichText.asHtml( item.caption_text ) %>

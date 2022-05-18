@@ -9,15 +9,22 @@ const profile = locals.context.doc.data.slices.find( ( slice ) => slice.slice_ty
             </div>
         </div>
     </div>
-    <div class="graphic graphic--banner -cover js-lazy-image" data-img-src="/img/ui/banner-4.jpg"></div>
+    <img class="graphic graphic--banner" src="/img/ui/banner-4.jpg" alt="Graphical banner" width="1503" height="200" />
     <div class="profile -exp">
         <div class="profile__banner">
             <div class="profile__pic">
-                <img class="image js-lazy-image" data-img-src="<%= profile.primary.pic.url %>" />
+                <img 
+                    class="image" 
+                    src="<%= profile.primary.pic.mobile.url %>"
+                    srcset="<%= profile.primary.pic.url %> 2x, <%= profile.primary.pic.mobile.url %> 1.5x"
+                    alt="Kelly Malone portrait"
+                    width="<%= profile.primary.pic.mobile.dimensions.width %>"
+                    height="<%= profile.primary.pic.mobile.dimensions.height %>"
+                />
             </div>
             <div class="profile__bio">
                 <div class="cms -lit">
-                    <h3><%= profile.primary.bio %></h3>
+                    <h2 class="h3"><%= profile.primary.bio %></h2>
                 </div>
             </div>
         </div>

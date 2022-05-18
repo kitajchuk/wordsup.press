@@ -1,5 +1,5 @@
 const fs = require( "fs" );
-const path = require( "path" );
+const { gzip } = require( "node-gzip" );
 
 
 
@@ -22,13 +22,17 @@ module.exports = {
         }
     },
 
-    write ( path, content, sync ) {
+    async write ( path, content, sync ) {
         if ( sync ) {
-            return fs.writeFileSync( path, JSON.stringify( content ), "utf8" );
+            content = await gzip( JSON.stringify( content ) );
+
+            return  fs.writeFileSync( path, content );
 
         } else {
-            return new Promise(( resolve, reject ) => {
-                fs.writeFile( path, JSON.stringify( content ), "utf8", ( error ) => {
+            return new Promise(async ( resolve, reject ) => {
+                content = await gzip( JSON.stringify( content ) );
+
+                fs.writeFile( path, content, ( error ) => {
                     if ( error ) {
                         reject( error );
 
@@ -42,11 +46,11 @@ module.exports = {
 
     writeStr ( path, content, sync ) {
         if ( sync ) {
-            return fs.writeFileSync( path, String( content ), "utf8" );
+            return fs.writeFileSync( path, String( content ) );
 
         } else {
             return new Promise(( resolve, reject ) => {
-                fs.writeFile( path, String( content ), "utf8", ( error ) => {
+                fs.writeFile( path, String( content ), ( error ) => {
                     if ( error ) {
                         reject( error );
 

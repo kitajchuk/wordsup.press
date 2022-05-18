@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 import * as core from "../../core";
 import $ from "properjs-hobo";
 import ResizeController from "properjs-resizecontroller";
@@ -13,9 +14,6 @@ class Tabs {
         this.dash = this.element.find( ".js-tabs-dash" );
         this.line = this.element.find( ".js-tabs-line" );
         this.resizer = new ResizeController();
-
-        this.links.first().addClass( "is-active" );
-        this.contents.first().addClass( "is-active" );
 
         this.bind();
         this.onResize();
@@ -67,46 +65,13 @@ class Tabs {
 
     onResize () {
         if ( window.innerWidth > 768 ) {
-            this.links.forEach(( el, i ) => {
-                const link = this.links.eq( i );
-                const content = this.contents.eq( i );
-
-                core.util.translate3d(
-                    content[ 0 ],
-                    0,
-                    `${link[ 0 ].offsetTop}px`,
-                    0
-                );
-            });
-
-            const activeLink = this.links.filter( ".is-active" );
-            const activeContent = this.contents.filter( ".is-active" );
-            const activeContentBounds = activeContent[ 0 ].getBoundingClientRect();
-            const height = activeContentBounds.height + activeLink[ 0 ].offsetTop;
-
-            this.info[ 0 ].style.height = `${height}px`;
-
             this.setLine();
-
-        } else {
-            this.links.forEach(( el, i ) => {
-                const content = this.contents.eq( i );
-
-                core.util.translate3d(
-                    content[ 0 ],
-                    0,
-                    0,
-                    0
-                );
-            });
-
-            this.info[ 0 ].style.height = `auto`;
         }
     }
 
 
     destroy () {
-        this.resizer.destroy();
+        this.resizer.stop();
     }
 }
 

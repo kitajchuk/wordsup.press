@@ -41,13 +41,16 @@
     @include h1();
 }
 .h2,
+.cms h2 {
+    @include h2();
+}
 .h2 p,
-.cms h2,
 .cms .h2 p {
     @include h2();
 }
 .h3,
-.cms h3 {
+.cms h3,
+.cms .h3 {
     @include h3();
 }
 .h4,

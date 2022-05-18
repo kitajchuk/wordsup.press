@@ -13,7 +13,6 @@
  *
  *
  */
-const path = require( "path" );
 const lager = require( "properjs-lager" );
 const fs = require( "fs" );
 const request = require( "request-promise" );
@@ -38,7 +37,7 @@ const saveFile = ( obj ) => {
         const uris = slug ? slug.split( "/" ) : [];
         const _saveFile = () => {
             files.writeStr( place, obj.html ).then(() => {
-                lager.cache( `[Clutch] Linking static link ${place}` );
+                lager.cache( `[Clutch] Linking static link ${place.replace( process.cwd(), "" )}` );
 
                 resolve();
 
@@ -51,7 +50,7 @@ const saveFile = ( obj ) => {
             if ( !fs.existsSync( place ) ) {
                 fs.mkdirSync( place );
 
-                lager.cache( `[Clutch] Linking static link ${place}` );
+                lager.cache( `[Clutch] Linking static link ${place.replace( process.cwd(), "" )}` );
             }
         });
 
@@ -65,7 +64,7 @@ const saveFile = ( obj ) => {
             const placeJson = place.replace( /\.html$/, ".json" );
 
             files.write( placeJson, obj.json ).then(() => {
-                lager.cache( `[Clutch] Linking static link ${placeJson}` );
+                lager.cache( `[Clutch] Linking static link ${placeJson.replace( process.cwd(), "" )}` );
 
                 _saveFile();
             });
@@ -102,12 +101,12 @@ const cleanStatic = ( json ) => {
                     if ( regex.test( link ) ) {
                         fs.unlinkSync( link );
 
-                        lager.error( `[Clutch] Un-Linking static link ${link}` );
+                        lager.error( `[Clutch] Un-Linking static link ${link.replace( process.cwd(), "" )}` );
 
                         if ( fs.existsSync( linkJson ) && (linkJson !== `${saveLoc}/`) ) {
                             fs.unlinkSync( linkJson );
 
-                            lager.error( `[Clutch] Un-Linking static link ${linkJson}` );
+                            lager.error( `[Clutch] Un-Linking static link ${linkJson.replace( process.cwd(), "" )}` );
                         }
 
                     } else {
@@ -117,7 +116,7 @@ const cleanStatic = ( json ) => {
                         if ( !files.length ) {
                             fs.rmdirSync( link );
 
-                            lager.error( `[Clutch] Un-Linking static link ${link}` );
+                            lager.error( `[Clutch] Un-Linking static link ${link.replace( process.cwd(), "" )}` );
                         }
                     }
 
@@ -182,7 +181,7 @@ const requestApi = ( url ) => {
             }
 
         }).then(( json ) => {
-            resolve( json );
+            resolve( JSON.parse( json ) );
 
         }).catch(( error ) => {
             resolve({

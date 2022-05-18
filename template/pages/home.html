@@ -16,7 +16,7 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
     <div class="features js-features -wrapl-2">
         <div class="features__belt">
             <% feature.items.forEach(( slide, i ) => { %>
-                <div class="features__poster js-lazy-image js-features-poster <%= (i === 0 ? 'is-active' : '') %>" style="background-color:<%= slide.background_color %>;">
+                <div class="features__poster js-features-poster <%= (i === 0 ? 'is-active' : '') %>" style="background-color:<%= slide.background_color %>;">
                     <div class="features__lockup">
                         <div class="features__headline">
                             <div class="fh -<%= slide.text_tone %> <% if ( slide.use_quotes === 'Yes' ) { %>-qt<% } %>"><%- locals.context.newLine( slide.headline ) %></div>
@@ -25,7 +25,14 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
                             <%- locals.context.dom.RichText.asHtml( slide.attribution ) %>
                         </div>
                     </div>
-                    <div class="features__graphic js-lazy-image" data-img-src="<%= slide.slide_image.url %>"></div>
+                    <img
+                        class="features__graphic"
+                        src="<%= slide.slide_image.mobile.url %>"
+                        srcset="<%= slide.slide_image.url %> 2x, <%= slide.slide_image.mobile.url %> 1.5x"
+                        width="<%= slide.slide_image.mobile.dimensions.width %>"
+                        height="<%= slide.slide_image.mobile.dimensions.height %>"
+                        alt="<%- locals.context.cleanLines( slide.headline ) %>"
+                    />
                 </div>
             <% }) %>
         </div>
@@ -43,7 +50,15 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
     </div>
     <div class="list services -exp-2 -wrap-2">
         <div class="list__graphic">
-            <img class="image js-lazy-image" data-img-src="<%= services.primary.graphic.url %>" />
+            <img 
+                class="image"
+                src="<%= services.primary.graphic.mobile.url %>"
+                srcset="<%= services.primary.graphic.url %> 2x, <%= services.primary.graphic.mobile.url %> 1.5x"
+                loading="lazy"
+                width="<%= services.primary.graphic.mobile.dimensions.width %>"
+                height="<%= services.primary.graphic.mobile.dimensions.height %>"
+                alt="My services"
+            />
         </div>
         <div class="list__items">
             <div class="fh fh--alt"><%= services.primary.headline %></div>
@@ -56,7 +71,7 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
         </div>
     </div>
     <div class="testimonial">
-        <img class="testimonial__graphic js-lazy-image" data-img-src="/img/ui/banner-5.jpg" />
+        <img class="testimonial__graphic" loading="lazy" src="/img/ui/banner-5.jpg" alt="Graphical banner" width="2048" height="622" />
         <div class="testimonial__tout -wrap -exp-2">
             <div class="testimonial__svg">
                 <%- include( '../svg/quote.svg' ) %>
@@ -89,7 +104,15 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
             <% }) %>
         </div>
         <div class="list__graphic">
-            <img class="image js-lazy-image" data-img-src="<%= tips.primary.graphic.url %>" />
+            <img 
+                class="image"
+                src="<%= tips.primary.graphic.mobile.url %>"
+                srcset="<%= tips.primary.graphic.url %> 2x, <%= tips.primary.graphic.mobile.url %> 1.5x"
+                loading="lazy"
+                width="<%= tips.primary.graphic.mobile.dimensions.width %>"
+                height="<%= tips.primary.graphic.mobile.dimensions.height %>"
+                alt="My best writing tips"
+            />
         </div>
     </div>
     <div class="blog -exp -bg--cool -wrap-2">

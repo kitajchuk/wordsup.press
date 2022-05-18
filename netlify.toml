@@ -9,3 +9,28 @@
   for = "/manifest.json"
   [headers.values]
     Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/*/index.json"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"
+    Content-Encoding = "gzip"
+
+[[headers]]
+  for = "/js/app.js"
+  [headers.values]
+    Content-Encoding = "gzip"
+
+[[headers]]
+  for = "/css/screen.css"
+  [headers.values]
+    Content-Encoding = "gzip"
+
+[context.production]
+  environment = { NODE_VERSION = "16.14.2" }
+
+[context.deploy-preview]
+  environment = { NODE_VERSION = "16.14.2" }
+
+[context.branch-deploy]
+  environment = { NODE_VERSION = "16.14.2" }

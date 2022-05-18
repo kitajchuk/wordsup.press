@@ -1,7 +1,3 @@
-// Load the SASS
-require( "../sass/screen.scss" );
-
-
 // Load the JS
 import router from "./router";
 import * as core from "./core";

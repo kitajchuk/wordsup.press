@@ -1,5 +1,53 @@
 <% if ( locals.context.docs ) { %>
-    <div class="blog js-view" data-url="/blog/index.json" data-uid="blog"></div>
+    <%
+    const tags = [];
+
+    locals.context.docs.forEach(( doc ) => {
+        doc.tags.forEach(( tag ) => {
+            if ( tags.indexOf( tag ) === -1 ) {
+                tags.push( tag );
+            }
+        });
+    });
+    %>
+    <div class="blog js-blog">
+        <div class="masthead js-masthead -wrap-2 -exp-2 -bg--cool">
+            <div class="masthead__oh">
+                <h1 class="h1">Blog</h1>
+            </div>
+        </div>
+        <div class="blog__tags">
+            <div class="blog__tags__wrap -wrap-2">
+                <div class="m -grey">Tags</div>
+                <div class="m -grey">
+                    <span class="blog__tag js-tag is-active" data-tag="All">All</span>
+                </div>
+                <% tags.forEach(( tag, i ) => { %>
+                    <div class="m -grey">
+                        <span class="blog__tag js-tag" data-tag="<%= tag %>"><%= tag %></span>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+        <div class="blog__posts -wrap-2 -exp-2">
+            <% locals.context.docs.forEach(( doc ) => { %>
+                <% const color = doc.data.color.replace( /\s/g, "-" ).toLowerCase() %>
+                <div class="blog__post js-post" data-tag="<%= doc.tags.join( ',' ) %>">
+                    <a class="blog__wrap js-blog-link -bg--<%= color %>" href="/blog/<%= doc.uid %>/">
+                        <div class="blog__title h3">
+                            <%- locals.context.dom.RichText.asText( doc.data.title ) %>
+                        </div>
+                        <div class="blog__arrow">
+                            <svg class="svg svg--arrow-right">
+                                <polygon points="22.3,0 21.5,0.7 26.5,6 0,6 0,7 26.5,7 21.5,13 22.3,13.6 28.3,6.4"/>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+        <div class="blog__pagination -wrap-2" style="height: 1px;"></div>
+    </div>
 <% } else { %>
     <%
     const entry = locals.context.doc.data.slices.find( ( slice ) => slice.slice_type === 'blog_text' );

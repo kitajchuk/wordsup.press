@@ -11,20 +11,26 @@ context.pageTemplate = context.getTemplate();
 <html lang="en" class="">
     <head>
         <meta charset="utf-8" />
-        <title><%= context.pageTitle %></title>
         <meta http-equiv="x-dns-prefetch-control" content="on" />
-        <link rel="dns-prefetch" href="//wordsup-www.cdn.prismic.io" />
-        <link rel="dns-prefetch" href="//prismic-io.s3.amazonaws.com" />
-        <link rel="dns-prefetch" href="//www.google-analytics.com" />
         <meta name="description" content="<%= context.pageDescription %>" />
         <meta name="google-site-verification" content="<%= context.site.data.googleVerify %>" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
-        <link rel="apple-touch-icon" href="/logo192.png" />
-        <link rel="manifest" href="/manifest.json" />
         <meta name="image" property="og:image" content="<%= context.config.url %>/img/share/WordsUp_1600x800_white.jpg" />
+        <title><%= context.pageTitle %></title>
+        <link rel="dns-prefetch" href="//wordsup-www.cdn.prismic.io" />
+        <link rel="dns-prefetch" href="//prismic-io.s3.amazonaws.com" />
+        <link rel="apple-touch-icon" href="/logo192.png" />
+        <link rel="preload" href="/fonts/Balboa-ExtraCondensed.woff" crossorigin="anonymous" as="font" type="font/woff" />
+        <link rel="preload" href="/fonts/HK-Grotesk-Regular.woff" crossorigin="anonymous" as="font" type="font/woff" />
+        <link rel="preload" href="/fonts/HK-Grotesk-Semibold.woff" crossorigin="anonymous" as="font" type="font/woff" />
+        <link rel="preload" href="/fonts/HK-Grotesk-Bold.woff" crossorigin="anonymous" as="font" type="font/woff" />
+        <link rel="manifest" href="/manifest.json" />
         <link href="<%= sourceCSS %>" rel="stylesheet" />
-        <script type="application/google-analytics"></script>
+        <% /* %>
+            <link rel="dns-prefetch" href="//www.google-analytics.com" />
+            <script type="application/google-analytics"></script>
+        <% */ %>
     </head>
     <body class="-fzero">
         <%- include( 'site/navi.html' ) %>
@@ -34,13 +40,14 @@ context.pageTemplate = context.getTemplate();
         <%- include( 'site/footer.html' ) %>
         <%- include( 'site/intro.html' ) %>
         <script src="<%= sourceJS %>"></script>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=<%= context.site.data.googleUA %>"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag("js", new Date());
-            gtag("config", "<%= context.site.data.googleUA %>");
-        </script>
+        <% /* %>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=<%= context.site.data.googleUA %>"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag("js", new Date());
+                gtag("config", "<%= context.site.data.googleUA %>");
+            </script>
+        <% */ %>
     </body>
 </html>

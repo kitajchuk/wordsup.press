@@ -1,8 +1,6 @@
 import $ from "properjs-hobo";
 import Controller from "properjs-controller";
 import PageController from "properjs-pagecontroller";
-// import paramalama from "paramalama";
-// import * as gsap from "gsap/all";
 import Controllers from "./class/Controllers";
 import * as core from "./core";
 import navi from "./modules/navi";
@@ -58,29 +56,21 @@ const router = {
     load () {
         return new Promise(( resolve ) => {
             this.controller = new PageController({
-                transitionTime: this.animDuration,
-                routerOptions: {
-                    async: true
-                }
+                routes: [
+                    "/",
+                    ":view",
+                    ":view/:uid"
+                ],
+                transitionTime: this.animDuration
             });
-
-            this.controller.setConfig([
-                "/",
-                ":view",
-                ":view/:uid"
-            ]);
-
-            // this.controller.setModules( [] );
-
-            //this.controller.on( "page-controller-router-samepage", () => {} );
-            this.controller.on( "page-controller-router-transition-out", this.changePageOut.bind( this ) );
-            this.controller.on( "page-controller-router-refresh-document", this.changeContent.bind( this ) );
-            this.controller.on( "page-controller-router-transition-in", this.changePageIn.bind( this ) );
-            this.controller.on( "page-controller-initialized-page", ( data ) => {
+            this.controller.on( "transition-out", this.changePageOut.bind( this ) );
+            this.controller.on( "document", this.changeContent.bind( this ) );
+            this.controller.on( "transition-in", this.changePageIn.bind( this ) );
+            this.controller.on( "initialized", ( data ) => {
                 this.initPage( data );
                 resolve();
             });
-            this.controller.initPage();
+            this.controller.bind();
         });
     },
 

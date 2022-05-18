@@ -1,7 +1,4 @@
 import * as core from "../../core";
-import $ from "properjs-hobo";
-import ImageController from "../controllers/ImageController";
-// import paramalama from "paramalama";
 
 
 /**
@@ -23,7 +20,6 @@ class View {
         this.endpoint = this.data.url;
         this.json = null;
         this.controllers = {};
-        this.dataType = "text";
         this.method = "GET";
 
         this.init();
@@ -44,16 +40,7 @@ class View {
 
 
     done ( json ) {
-        try {
-            this.json = JSON.parse( json );
-
-            if ( typeof this.json === "string" ) {
-                this.json = JSON.parse( this.json );
-            }
-
-        } catch ( error ) {
-            core.log( "warn", error );
-        }
+        this.json = json;
 
         this.render();
         this.exec();
@@ -78,13 +65,15 @@ class View {
                 this.done( cache );
             }
 
-            // Update render from AJAX
-            $.ajax({
-                url: this.endpoint,
-                dataType: this.dataType,
-                method: this.method
-
-            }).then(( json ) => {
+            // Update render from JSON
+            fetch( this.endpoint, {
+                method: this.method,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then( ( res ) => res.json() )
+            .then(( json ) => {
                 // Update the cache from AJAX
                 core.cache.set( this.id, json );
 
@@ -118,9 +107,7 @@ class View {
      * @method exec
      *
      */
-    exec () {
-        this.controllers.image = new ImageController( this.element.find( core.config.lazyImageSelector ) );
-    }
+    exec () {}
 
 
     /**
@@ -131,11 +118,7 @@ class View {
      * @method destroy
      *
      */
-    destroy () {
-        if ( this.controllers.image ) {
-            this.controllers.image.destroy();
-        }
-    }
+    destroy () {}
 }
 
 

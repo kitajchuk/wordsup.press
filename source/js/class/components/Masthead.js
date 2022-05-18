@@ -57,7 +57,7 @@ class Masthead {
 
 
     destroy () {
-        this.resizer.destroy();
+        this.resizer.stop();
     }
 }
 

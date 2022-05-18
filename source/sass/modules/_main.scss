@@ -124,9 +124,11 @@
     top: 0;
     height: 100%;
     width: 100%;
-    background-size: contain;
-    background-position: 100% 50%;
-    background-repeat: no-repeat;
+    // background-size: contain;
+    // background-position: 100% 50%;
+    // background-repeat: no-repeat;
+    object-fit: contain;
+    object-position: 100% 50%;
 
     &:after {
         background-color: $black;
@@ -351,6 +353,8 @@
     justify-content: flex-start;
 }
 .blog__tag {
+    cursor: pointer;
+
     &.is-active {
         @include font-family-bold();
         color: $black;
@@ -419,6 +423,10 @@
     position: relative;
     padding: 10px;
 
+    &.is-hidden {
+        display: none;
+    }
+
     @include respond( $tablet-width ) {
         width: 50%;
     }
@@ -461,6 +469,7 @@
 .graphic--banner {
     height: $banner-height;
     width: 100%;
+    object-fit: cover;
 }
 
 
@@ -648,13 +657,7 @@
     }
 }
 .tabs__content {
-    position: absolute;
-    left: 0;
-    top: -12px;
-    width: 100%;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity $base-duration $ease;
+    display: none;
 
     & + .tabs__content {
         @include respond( $mobile-width ) {
@@ -663,11 +666,7 @@
     }
 
     @include respond( $mobile-width ) {
-        position: relative;
-        top: auto;
-        left: auto;
-        opacity: 1;
-        pointer-events: auto;
+        display: block;
     }
 
     .resources &:before {
@@ -681,9 +680,7 @@
     }
 
     &.is-active {
-        opacity: 1;
-        pointer-events: auto;
-        position: relative;
+        display: block;
     }
 }
 .tabs__link {
@@ -997,4 +994,5 @@ $profile-breakdown: $premobile-width;
     left: 50%;
     transform: translate3d( -50%, -50%, 0 );
     z-index: 1;
+    height: auto;
 }

@@ -1,14 +1,19 @@
-// import * as core from "../../core";
-
-
-
 class Disqus {
     constructor ( element, data ) {
         this.element = element;
         this.data = data;
+        this.observer = new IntersectionObserver( this.observe.bind( this ) );
+        this.observer.observe( this.element[ 0 ] );
 
         this.init( data );
-        this.load();
+    }
+
+
+    observe ( entries ) {
+        if ( entries[ 0 ].isIntersecting ) {
+            this.observer.disconnect();
+            this.load();
+        }
     }
 
 
@@ -33,6 +38,7 @@ class Disqus {
     destroy () {
         window.disqus_config = null;
         delete window.disqus_config;
+        this.observer = null;
     }
 }
 
