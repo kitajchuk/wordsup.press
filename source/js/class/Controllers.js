@@ -6,6 +6,7 @@ import Tabs from "./components/Tabs";
 import Features from "./components/Features";
 import Masthead from "./components/Masthead";
 import Disqus from "./components/Disqus";
+import Blog from "./components/Blog";
 
 
 /**
@@ -68,6 +69,7 @@ class Controllers {
         this.push( "masthead", core.dom.main.find( ".js-masthead" ), BaseController, Masthead );
         this.push( "features", core.dom.main.find( ".js-features" ), BaseController, Features );
         this.push( "disqus", core.dom.main.find( "#disqus_thread" ), BaseController, Disqus );
+        this.push( "blog", core.dom.main.find( ".js-blog" ), BaseController, Blog );
 
         this.init();
     }

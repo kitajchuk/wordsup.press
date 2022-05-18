@@ -15,9 +15,9 @@
 
 
 # Clutch
+.env*
 .notes
 .clutch
-.clutch-pre
 static/js
 static/css
 static/svg
