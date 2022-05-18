@@ -17,14 +17,6 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
         <div class="features__belt">
             <% feature.items.forEach(( slide, i ) => { %>
                 <div class="features__poster js-features-poster <%= (i === 0 ? 'is-active' : '') %>" style="background-color:<%= slide.background_color %>;">
-                    <div class="features__lockup">
-                        <div class="features__headline">
-                            <div class="fh -<%= slide.text_tone %> <% if ( slide.use_quotes === 'Yes' ) { %>-qt<% } %>"><%- locals.context.newLine( slide.headline ) %></div>
-                        </div>
-                        <div class="features__byline cms -<%= slide.text_tone %> -fsbold">
-                            <%- locals.context.dom.RichText.asHtml( slide.attribution ) %>
-                        </div>
-                    </div>
                     <img
                         class="features__graphic"
                         src="<%= slide.slide_image.mobile.url %>"
@@ -33,6 +25,15 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
                         height="<%= slide.slide_image.mobile.dimensions.height %>"
                         alt="<%- locals.context.cleanLines( slide.headline ) %>"
                     />
+                    <span class="feature__screen"></span>
+                    <div class="features__lockup">
+                        <div class="features__headline">
+                            <div class="fh -<%= slide.text_tone %> <% if ( slide.use_quotes === 'Yes' ) { %>-qt<% } %>"><%- locals.context.newLine( slide.headline ) %></div>
+                        </div>
+                        <div class="features__byline cms -<%= slide.text_tone %> -fsbold">
+                            <%- locals.context.dom.RichText.asHtml( slide.attribution ) %>
+                        </div>
+                    </div>
                 </div>
             <% }) %>
         </div>
