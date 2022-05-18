@@ -37,10 +37,11 @@ const praise = locals.context.doc.data.slices.find( ( slice ) => slice.slice_typ
                     <div class="praise__graphic">
                         <img 
                             class="image" 
-                            src="<%= item.graphic.url %>"
+                            src="<%= item.graphic.mobile.url %>"
+                            src="<%= item.graphic.url %> 2x, <%= item.graphic.mobile.url %> 1.5x"
                             alt="Picture of book"
-                            width="<%= item.graphic.dimensions.width %>"
-                            height="<%= item.graphic.dimensions.height %>"
+                            width="<%= item.graphic.mobile.dimensions.width %>"
+                            height="<%= item.graphic.mobile.dimensions.height %>"
                             loading="<%= (i === 0) ? 'eager' : 'lazy' %>"
                         />
                     </div>

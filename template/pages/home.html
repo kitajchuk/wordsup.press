@@ -27,9 +27,10 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
                     </div>
                     <img
                         class="features__graphic"
-                        src="<%= slide.slide_image.url %>"
-                        width="<%= slide.slide_image.dimensions.width %>"
-                        height="<%= slide.slide_image.dimensions.height %>"
+                        src="<%= slide.slide_image.mobile.url %>"
+                        srcset="<%= slide.slide_image.url %> 2x, <%= slide.slide_image.mobile.url %> 1.5x"
+                        width="<%= slide.slide_image.mobile.dimensions.width %>"
+                        height="<%= slide.slide_image.mobile.dimensions.height %>"
                         alt="<%- locals.context.cleanLines( slide.headline ) %>"
                     />
                 </div>
@@ -51,10 +52,11 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
         <div class="list__graphic">
             <img 
                 class="image"
-                src="<%= services.primary.graphic.url %>"
+                src="<%= services.primary.graphic.mobile.url %>"
+                srcset="<%= services.primary.graphic.url %> 2x, <%= services.primary.graphic.mobile.url %> 1.5x"
                 loading="lazy"
-                width="<%= services.primary.graphic.dimensions.width %>"
-                height="<%= services.primary.graphic.dimensions.height %>"
+                width="<%= services.primary.graphic.mobile.dimensions.width %>"
+                height="<%= services.primary.graphic.mobile.dimensions.height %>"
                 alt="My services"
             />
         </div>
@@ -104,10 +106,11 @@ const testimonial = locals.context.doc.data.slices.find( ( slice ) => slice.slic
         <div class="list__graphic">
             <img 
                 class="image"
-                src="<%= tips.primary.graphic.url %>"
+                src="<%= tips.primary.graphic.mobile.url %>"
+                srcset="<%= tips.primary.graphic.url %> 2x, <%= tips.primary.graphic.mobile.url %> 1.5x"
                 loading="lazy"
-                width="<%= tips.primary.graphic.dimensions.width %>"
-                height="<%= tips.primary.graphic.dimensions.height %>"
+                width="<%= tips.primary.graphic.mobile.dimensions.width %>"
+                height="<%= tips.primary.graphic.mobile.dimensions.height %>"
                 alt="My best writing tips"
             />
         </div>

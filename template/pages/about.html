@@ -15,10 +15,11 @@ const profile = locals.context.doc.data.slices.find( ( slice ) => slice.slice_ty
             <div class="profile__pic">
                 <img 
                     class="image" 
-                    src="<%= profile.primary.pic.url %>"
+                    src="<%= profile.primary.pic.mobile.url %>"
+                    srcset="<%= profile.primary.pic.url %> 2x, <%= profile.primary.pic.mobile.url %> 1.5x"
                     alt="Kelly Malone portrait"
-                    width="<%= profile.primary.pic.dimensions.width %>"
-                    height="<%= profile.primary.pic.dimensions.height %>"
+                    width="<%= profile.primary.pic.mobile.dimensions.width %>"
+                    height="<%= profile.primary.pic.mobile.dimensions.height %>"
                 />
             </div>
             <div class="profile__bio">
