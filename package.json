@@ -6,7 +6,7 @@
   "version": "0.0.1",
   "scripts": {
     "prepare": "husky install",
-    "postinstall": "[ ! -d .clutch ] && mkdir .clutch ; [ ! -f .clutch/config.json ] && cp clutch.config.json .clutch/config.json ; npm run build:hobo",
+    "postinstall": "[ ! -d .clutch ] && mkdir .clutch ; [ ! -f .clutch/config.json ] && cp clutch.config.json .clutch/config.json ; npm run build:hobo ; cd functions/services && npm install",
     "start": "npx concurrently \"npm run server\" \"npm run watch:js\" \"npm run watch:sass\"",
     "watch:js": "export NODE_ENV=sandbox ; npx webpack --env sandbox --config webpack.config.js --watch",
     "watch:sass": "npx chokidar \"source/sass/**/*.scss\" -c \"npm run build:sass\"",
