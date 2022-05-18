@@ -6,7 +6,7 @@
   "version": "0.0.1",
   "scripts": {
     "prepare": "husky install",
-    "postinstall": "[ ! -d .clutch ] && mkdir .clutch ; [ ! -f .clutch/config.json ] && cp clutch.config.json .clutch/config.json ; npm run build:hobo ; cd functions/services && npm install",
+    "postinstall": "[ ! -d .clutch ] && mkdir .clutch ; [ ! -f .clutch/config.json ] && cp clutch.config.json .clutch/config.json ; npm run build:hobo",
     "start": "npx concurrently \"npm run server\" \"npm run watch:js\" \"npm run watch:sass\"",
     "watch:js": "export NODE_ENV=sandbox ; npx webpack --env sandbox --config webpack.config.js --watch",
     "watch:sass": "npx chokidar \"source/sass/**/*.scss\" -c \"npm run build:sass\"",
@@ -59,6 +59,7 @@
     "xml2js": "^0.4.22"
   },
   "dependencies": {
+    "nodemailer": "^6.4.16",
     "paramalama": "~0.2",
     "prismic-dom": "^2.0.6",
     "properjs-controller": "^0.3.1",
@@ -67,7 +68,8 @@
     "properjs-pagecontroller": "^0.5.0",
     "properjs-resizecontroller": "^0.3.0",
     "properjs-router": "^0.5.1",
-    "properjs-scrollcontroller": "^0.3.0"
+    "properjs-scrollcontroller": "^0.3.0",
+    "striptags": "^3.2.0"
   },
   "lint-staged": {
     "source/js/**/*.js": "npm run lint"
