@@ -1,7 +1,6 @@
 import log from "../../core/log";
 import emitter from "../../core/emitter";
 
-
 /**
  *
  * @public
@@ -12,52 +11,48 @@ import emitter from "../../core/emitter";
  *
  */
 class Analytics {
-    constructor () {
-        emitter.on( "app--analytics-pageview", this.track.bind( this ) );
+  constructor() {
+    emitter.on("app--analytics-pageview", this.track.bind(this));
 
-        log( "[Analytics initialized]" );
+    log("[Analytics initialized]");
+  }
+
+  /**
+   *
+   * @public
+   * @method track
+   * @memberof core.Analytics
+   * @param {object} doc The doc object created by router {$doc, $page, pageData, pageHtml}
+   * @description Track Squarespace Metrics since we are ajax-routing.
+   *
+   */
+  track(doc) {
+    log("Analytics pageview", window.location.href);
+
+    // Google Analytics
+    if (window.gtag) {
+      window.gtag("event", "page_view", { send_to: "UA-129523951-1" });
     }
 
+    // Document title
+    this.setDocumentTitle(doc.data.title);
+  }
 
-    /**
-     *
-     * @public
-     * @method track
-     * @memberof core.Analytics
-     * @param {object} doc The doc object created by router {$doc, $page, pageData, pageHtml}
-     * @description Track Squarespace Metrics since we are ajax-routing.
-     *
-     */
-    track ( doc ) {
-        log( "Analytics pageview", window.location.href );
-
-        // Google Analytics
-        if ( window.gtag ) {
-            window.gtag( "event", "page_view", { send_to: "UA-129523951-1" } );
-        }
-
-        // Document title
-        this.setDocumentTitle( doc.data.title );
-    }
-
-
-    /**
-     *
-     * @public
-     * @method setDocumentTitle
-     * @param {string} title The new title for the document
-     * @memberof class.Analytics
-     * @description Update the documents title.
-     *
-     */
-    setDocumentTitle ( title ) {
-        document.title = title;
-    }
+  /**
+   *
+   * @public
+   * @method setDocumentTitle
+   * @param {string} title The new title for the document
+   * @memberof class.Analytics
+   * @description Update the documents title.
+   *
+   */
+  setDocumentTitle(title) {
+    document.title = title;
+  }
 }
-
-
 
 /******************************************************************************
  * Export
-*******************************************************************************/
+ *******************************************************************************/
 export default Analytics;

@@ -1,5 +1,3 @@
-const config = require( "../../clutch.config" );
+const config = require("../../clutch.config");
 
-
-
-module.exports = require( `../adapters/${config.api.adapter}` );
+module.exports = require(`../adapters/${config.api.adapter}`);

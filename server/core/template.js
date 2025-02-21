@@ -1,10 +1,8 @@
-const fs = require( "fs" );
-const lager = require( "properjs-lager" );
-const config = require( "../../clutch.config" );
-const consolidate = require( "consolidate" );
+const fs = require("fs");
+const lager = require("properjs-lager");
+const config = require("../../clutch.config");
+const consolidate = require("consolidate");
 const cache = {};
-
-
 
 /**
  *
@@ -12,34 +10,31 @@ const cache = {};
  *
  */
 const getPages = () => {
-    return new Promise(( resolve, reject ) => {
-        fs.readdir( config.template.pagesDir, ( error, files ) => {
-            if ( error ) {
-                reject( error );
+  return new Promise((resolve, reject) => {
+    fs.readdir(config.template.pagesDir, (error, files) => {
+      if (error) {
+        reject(error);
+      } else {
+        cache.pages = files;
 
-            } else {
-                cache.pages = files;
-
-                resolve( files );
-            }
-        });
+        resolve(files);
+      }
     });
+  });
 };
-
-
 
 /**
  *
  * Template adapter setup.
  *
  */
-consolidate.requires[ config.template.module ] = require( `${config.template.module}` );
-
-
+consolidate.requires[config.template.module] = require(
+  `${config.template.module}`,
+);
 
 module.exports = {
-    render: consolidate[ config.template.module ],
-    consolidate: consolidate,
-    getPages,
-    cache
+  render: consolidate[config.template.module],
+  consolidate: consolidate,
+  getPages,
+  cache,
 };

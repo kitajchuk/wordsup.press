@@ -14,14 +14,4 @@ import log from "./log";
 import cache from "./cache";
 import emitter from "./emitter";
 
-
-export {
-    detect,
-    dom,
-    util,
-    config,
-    env,
-    log,
-    cache,
-    emitter,
-};
+export { detect, dom, util, config, env, log, cache, emitter };

@@ -8,7 +8,6 @@ import Masthead from "./components/Masthead";
 import Disqus from "./components/Disqus";
 import Blog from "./components/Blog";
 
-
 /**
  *
  * @public
@@ -19,70 +18,78 @@ import Blog from "./components/Blog";
  *
  */
 class Controllers {
-    constructor ( options ) {
-        this.element = options.el;
-        this.callback = options.cb;
-        this.controllers = [];
-    }
+  constructor(options) {
+    this.element = options.el;
+    this.callback = options.cb;
+    this.controllers = [];
+  }
 
+  push(id, elements, controller, component) {
+    this.controllers.push({
+      id,
+      elements,
+      instance: null,
+      Controller: controller,
+      component,
+    });
+  }
 
-    push ( id, elements, controller, component ) {
-        this.controllers.push({
-            id,
-            elements,
-            instance: null,
-            Controller: controller,
-            component
-        });
-    }
+  init() {
+    this.controllers.forEach((controller) => {
+      if (controller.elements.length) {
+        controller.instance = new controller.Controller(
+          controller.elements,
+          controller.component,
+        );
+      }
+    });
+  }
 
+  kill() {
+    this.controllers.forEach((controller) => {
+      if (controller.instance) {
+        controller.instance.destroy();
+      }
+    });
 
-    init () {
-        this.controllers.forEach(( controller ) => {
-            if ( controller.elements.length ) {
-                controller.instance = new controller.Controller(
-                    controller.elements,
-                    controller.component
-                );
-            }
-        });
-    }
+    this.controllers = [];
+  }
 
+  exec() {
+    this.controllers = [];
 
-    kill () {
-        this.controllers.forEach(( controller ) => {
-            if ( controller.instance ) {
-                controller.instance.destroy();
-            }
-        });
+    this.push("view", core.dom.body.find(".js-view"), BaseController, View);
+    this.push("form", core.dom.body.find(".js-form"), BaseController, Form);
+    this.push("tabs", core.dom.body.find(".js-tabs"), BaseController, Tabs);
+    this.push(
+      "masthead",
+      core.dom.main.find(".js-masthead"),
+      BaseController,
+      Masthead,
+    );
+    this.push(
+      "features",
+      core.dom.main.find(".js-features"),
+      BaseController,
+      Features,
+    );
+    this.push(
+      "disqus",
+      core.dom.main.find("#disqus_thread"),
+      BaseController,
+      Disqus,
+    );
+    this.push("blog", core.dom.main.find(".js-blog"), BaseController, Blog);
 
-        this.controllers = [];
-    }
+    this.init();
+  }
 
-
-    exec () {
-        this.controllers = [];
-
-        this.push( "view", core.dom.body.find( ".js-view" ), BaseController, View );
-        this.push( "form", core.dom.body.find( ".js-form" ), BaseController, Form );
-        this.push( "tabs", core.dom.body.find( ".js-tabs" ), BaseController, Tabs );
-        this.push( "masthead", core.dom.main.find( ".js-masthead" ), BaseController, Masthead );
-        this.push( "features", core.dom.main.find( ".js-features" ), BaseController, Features );
-        this.push( "disqus", core.dom.main.find( "#disqus_thread" ), BaseController, Disqus );
-        this.push( "blog", core.dom.main.find( ".js-blog" ), BaseController, Blog );
-
-        this.init();
-    }
-
-
-    destroy () {
-        this.kill();
-    }
+  destroy() {
+    this.kill();
+  }
 }
-
-
 
 /******************************************************************************
  * Export
-*******************************************************************************/
+ *******************************************************************************/
 export default Controllers;

@@ -5,7 +5,6 @@ import navi from "./modules/navi";
 import intro from "./modules/intro";
 import Analytics from "./class/services/Analytics";
 
-
 /**
  *
  * @public
@@ -14,44 +13,43 @@ import Analytics from "./class/services/Analytics";
  *
  */
 class App {
-    constructor () {
-        this.analytics = new Analytics();
-        this.core = core;
-        this.intro = intro;
-        this.router = router;
-        this.navi = navi;
+  constructor() {
+    this.analytics = new Analytics();
+    this.core = core;
+    this.intro = intro;
+    this.router = router;
+    this.navi = navi;
 
-        this.init();
-    }
+    this.init();
+  }
 
-
-    /**
-     *
-     * @public
-     * @instance
-     * @method init
-     * @memberof App
-     * @description Initialize application modules.
-     *
-     */
-    init () {
-        this.core.detect.init();
-        this.intro.init();
-        this.navi.init();
-        this.router.init();
-        this.router.load().then(() => {
-            this.intro.teardown();
-
-        }).catch(( error ) => {
-            this.core.log( "warn", error );
-        });
-    }
+  /**
+   *
+   * @public
+   * @instance
+   * @method init
+   * @memberof App
+   * @description Initialize application modules.
+   *
+   */
+  init() {
+    this.core.detect.init();
+    this.intro.init();
+    this.navi.init();
+    this.router.init();
+    this.router
+      .load()
+      .then(() => {
+        this.intro.teardown();
+      })
+      .catch((error) => {
+        this.core.log("warn", error);
+      });
+  }
 }
-
 
 // Create {app} instance
 window.app = new App();
-
 
 // Export {app} instance
 export default window.app;

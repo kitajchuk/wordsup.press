@@ -1,6 +1,5 @@
 import env from "./env";
 
-
 /**
  *
  * @public
@@ -18,26 +17,24 @@ import env from "./env";
  *              log( "debug", ...args )
  *
  */
-const log = function ( ...args ) {
-    // Only log for development environments
-    if ( !env.isDev() || !("console" in window) ) {
-        return;
-    }
+const log = function (...args) {
+  // Only log for development environments
+  if (!env.isDev() || !("console" in window)) {
+    return;
+  }
 
-    let method = "log";
+  let method = "log";
 
-    // First arg can be another `console` method to call ?
-    if ( typeof console[ args[ 0 ] ] === "function" ) {
-        method = args[ 0 ];
-        args = args.slice( 1, args.length );
-    }
+  // First arg can be another `console` method to call ?
+  if (typeof console[args[0]] === "function") {
+    method = args[0];
+    args = args.slice(1, args.length);
+  }
 
-    window.console[ method ]( args );
+  window.console[method](args);
 };
-
-
 
 /******************************************************************************
  * Export
-*******************************************************************************/
+ *******************************************************************************/
 export default log;

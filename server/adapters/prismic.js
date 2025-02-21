@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 /**
  *
  * Adapter for Prismic
@@ -26,203 +24,198 @@
  *
  *
  */
-const path = require( "path" );
-const prismic = require( "prismic-javascript" );
+const path = require("path");
+const prismic = require("prismic-javascript");
 const cache = {
-    api: null,
-    site: null,
-    navi: null,
-    docs: null
+  api: null,
+  site: null,
+  navi: null,
+  docs: null,
 };
 const core = {
-    config: require( "../../clutch.config" ),
-    template: require( "../core/template" )
+  config: require("../../clutch.config"),
+  template: require("../core/template"),
 };
-const ContextObject = require( "../class/ContextObject" );
+const ContextObject = require("../class/ContextObject");
 const apiOptions = {
-    accessToken: core.config.api.token || null,
-    fetchLinks: core.config.api.fetchLinks || []
+  accessToken: core.config.api.token || null,
+  fetchLinks: core.config.api.fetchLinks || [],
 };
-
-
 
 /**
  *
  * Load the Site context model.
  *
  */
-const getSite = ( req ) => {
-    return new Promise(( resolve, reject ) => {
-        prismic.api( core.config.api.access, apiOptions ).then(( api ) => {
-            cache.api = api;
+const getSite = (req) => {
+  return new Promise((resolve, reject) => {
+    prismic.api(core.config.api.access, apiOptions).then((api) => {
+      cache.api = api;
 
-            getDocs().then(( docs ) => {
-                const navi = {
-                    items: []
-                };
-                const site = {
-                    data: {}
-                };
+      getDocs().then((docs) => {
+        const navi = {
+          items: [],
+        };
+        const site = {
+          data: {},
+        };
 
-                // Normalize site context
-                for ( let i in docs.site[ 0 ].data ) {
-                    // Skip navi since we process that elsewhere...
-                    if ( i !== "navi" ) {
-                        // Handle `null` values...
-                        if ( !docs.site[ 0 ].data[ i ] ) {
-                            site.data[ i ] = "";
+        // Normalize site context
+        for (let i in docs.site[0].data) {
+          // Skip navi since we process that elsewhere...
+          if (i !== "navi") {
+            // Handle `null` values...
+            if (!docs.site[0].data[i]) {
+              site.data[i] = "";
 
-                        // Handle `string` values...
-                        } else {
-                            site.data[ i ] = docs.site[ 0 ].data[ i ];
-                        }
-                    }
-                }
+              // Handle `string` values...
+            } else {
+              site.data[i] = docs.site[0].data[i];
+            }
+          }
+        }
 
-                // Normalize navi context
-                docs.site[ 0 ].data.navi.forEach(( slice ) => {
-                    const navItem = {
-                        uid: slice.primary.page.uid ? slice.primary.page.uid : slice.primary.slug,
-                        title: slice.primary.name
-                    };
-                    let slug = slice.primary.page.uid ? slice.primary.page.uid : slice.primary.slug ? slice.primary.slug : core.config.homepage;
+        // Normalize navi context
+        docs.site[0].data.navi.forEach((slice) => {
+          const navItem = {
+            uid: slice.primary.page.uid
+              ? slice.primary.page.uid
+              : slice.primary.slug,
+            title: slice.primary.name,
+          };
+          let slug = slice.primary.page.uid
+            ? slice.primary.page.uid
+            : slice.primary.slug
+              ? slice.primary.slug
+              : core.config.homepage;
 
-                    if ( slug === core.config.homepage ) {
-                        navItem.slug = "/";
+          if (slug === core.config.homepage) {
+            navItem.slug = "/";
+          } else {
+            navItem.slug = `/${slug}/`;
+          }
 
-                    } else {
-                        navItem.slug = `/${slug}/`;
-                    }
+          // Iterate type mappings and reverse the lookup
+          for (let type in core.config.generate.mappings) {
+            // The collection mapping value matches a page UID
+            if (
+              core.config.generate.mappings[type] === slice.primary.page.uid
+            ) {
+              navItem.children = docs[type];
+            }
+          }
 
-                    // Iterate type mappings and reverse the lookup
-                    for ( let type in core.config.generate.mappings ) {
-                        // The collection mapping value matches a page UID
-                        if ( core.config.generate.mappings[ type ] === slice.primary.page.uid ) {
-                            navItem.children = docs[ type ];
-                        }
-                    }
-
-                    navi.items.push( navItem );
-                });
-
-                cache.site = site;
-                cache.navi = navi;
-                cache.docs = docs;
-
-                resolve();
-            });
+          navi.items.push(navItem);
         });
+
+        cache.site = site;
+        cache.navi = navi;
+        cache.docs = docs;
+
+        resolve();
+      });
     });
+  });
 };
-
-
 
 /**
  *
  * Handle API requests.
  *
  */
-const getApi = ( req, res, listener ) => {
-    return new Promise(( resolve, reject ) => {
-        const doQuery = ( type, uid ) => {
-            let ret = null;
-            let pageUIDoc = cache.docs.page.find(( page ) => {
-                return (page.uid === type);
-            });
-            const resolveData = {
-                site: cache.site,
-                navi: cache.navi
-            };
+const getApi = (req, res, listener) => {
+  return new Promise((resolve, reject) => {
+    const doQuery = (type, uid) => {
+      let ret = null;
+      let pageUIDoc = cache.docs.page.find((page) => {
+        return page.uid === type;
+      });
+      const resolveData = {
+        site: cache.site,
+        navi: cache.navi,
+      };
 
-            if ( cache.api.data.forms[ type ] ) {
-                const regex = /\[\[\:d\s=\sany\(document.type,\s\["(.*?)"\]\)\]\]/;
-                const match = cache.api.data.forms[ type ].fields.q.default.match( regex );
+      if (cache.api.data.forms[type]) {
+        const regex = /\[\[\:d\s=\sany\(document.type,\s\["(.*?)"\]\)\]\]/;
+        const match = cache.api.data.forms[type].fields.q.default.match(regex);
 
-                type = match[ 1 ] || type;
-            }
+        type = match[1] || type;
+      }
 
-            // One-pager
-            if ( core.config.onepager ) {
-                resolveData.doc = cache.docs.page.find(( d ) => {
-                    return (d.uid === core.config.homepage);
-                });
+      // One-pager
+      if (core.config.onepager) {
+        resolveData.doc = cache.docs.page.find((d) => {
+          return d.uid === core.config.homepage;
+        });
 
-            // Homepage "/"
-            } else if ( type === core.config.homepage ) {
-                if ( pageUIDoc ) {
-                    resolveData.doc = pageUIDoc;
+        // Homepage "/"
+      } else if (type === core.config.homepage) {
+        if (pageUIDoc) {
+          resolveData.doc = pageUIDoc;
+        } else {
+          resolveData.docs = cache.docs;
+        }
+      } else {
+        const docs = cache.docs[type] || cache.docs.page;
 
-                } else {
-                    resolveData.docs = cache.docs;
-                }
+        // Single
+        if (uid) {
+          const doc = docs.find((d) => {
+            return d.uid === uid;
+          });
+          const idx = docs.indexOf(doc);
+          let next = null;
+          let prev = null;
 
-            } else {
-                const docs = cache.docs[ type ] || cache.docs.page;
+          if (docs[idx + 1]) {
+            next = docs[idx + 1];
+          }
 
-                // Single
-                if ( uid ) {
-                    const doc = docs.find(( d ) => {
-                        return (d.uid === uid);
-                    });
-                    const idx = docs.indexOf( doc );
-                    let next = null;
-                    let prev = null;
+          if (docs[idx - 1]) {
+            prev = docs[idx - 1];
+          }
 
-                    if ( docs[ idx + 1 ] ) {
-                        next = docs[ idx + 1 ];
-                    }
+          resolveData.doc = doc;
+          resolveData.next = next;
+          resolveData.prev = prev;
+        } else if (pageUIDoc) {
+          resolveData.doc = pageUIDoc;
+          resolveData.docs = docs;
+        } else {
+          resolveData.docs = docs;
+        }
+      }
 
-                    if ( docs[ idx - 1 ] ) {
-                        prev = docs[ idx - 1 ];
-                    }
+      // @hook: orderings
+      // if ( listener && listener.handlers.orderings ) {
+      //     listener.handlers.orderings( req, cache, resolveData );
+      // }
 
-                    resolveData.doc = doc;
-                    resolveData.next = next;
-                    resolveData.prev = prev;
+      // @hook: fetchLinks
+      // if ( listener && listener.handlers.fetchLinks ) {
+      //     listener.handlers.fetchLinks( req, cache, resolveData );
+      // }
 
-                } else if ( pageUIDoc ) {
-                    resolveData.doc = pageUIDoc;
-                    resolveData.docs = docs;
+      // @hook: pagination
+      // if ( listener && listener.handlers.pagination ) {
+      //     listener.handlers.pagination( req, cache, resolveData );
+      // }
 
-                } else {
-                    resolveData.docs = docs;
-                }
-            }
+      resolve(resolveData);
+    };
 
-            // @hook: orderings
-            // if ( listener && listener.handlers.orderings ) {
-            //     listener.handlers.orderings( req, cache, resolveData );
-            // }
-
-            // @hook: fetchLinks
-            // if ( listener && listener.handlers.fetchLinks ) {
-            //     listener.handlers.fetchLinks( req, cache, resolveData );
-            // }
-
-            // @hook: pagination
-            // if ( listener && listener.handlers.pagination ) {
-            //     listener.handlers.pagination( req, cache, resolveData );
-            // }
-
-            resolve( resolveData );
-        };
-
-        doQuery( req.params.type, req.params.uid );
-    });
+    doQuery(req.params.type, req.params.uid);
+  });
 };
-
-
 
 /**
  *
  * Handle Page requests.
  *
  */
-const getPage = ( req, res, listener ) => {
-    return getApi( req, res, listener );
+const getPage = (req, res, listener) => {
+  return getApi(req, res, listener);
 };
-
-
 
 /**
  *
@@ -230,102 +223,93 @@ const getPage = ( req, res, listener ) => {
  *
  */
 const getDocs = () => {
-    return new Promise(( resolve, reject ) => {
-        let docs = {};
-        const getDocs = ( p ) => {
-            const options = {
-                fetchLinks: core.config.api.fetchLinks || [],
-                pageSize: 100,
-                page: p,
-                ref: getRef()
-            };
+  return new Promise((resolve, reject) => {
+    let docs = {};
+    const getDocs = (p) => {
+      const options = {
+        fetchLinks: core.config.api.fetchLinks || [],
+        pageSize: 100,
+        page: p,
+        ref: getRef(),
+      };
 
-            cache.api
-                .query( "", options )
-                .then(( json ) => {
-                    json.results.forEach(( doc ) => {
-                        if ( !docs[ doc.type ] ) {
-                            docs[ doc.type ] = [];
-                        }
+      cache.api
+        .query("", options)
+        .then((json) => {
+          json.results.forEach((doc) => {
+            if (!docs[doc.type]) {
+              docs[doc.type] = [];
+            }
 
-                        docs[ doc.type ].push( doc );
-                    });
+            docs[doc.type].push(doc);
+          });
 
-                    if ( json.next_page ) {
-                        getDocs( (p + 1) );
+          if (json.next_page) {
+            getDocs(p + 1);
+          } else {
+            resolve(docs);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    };
 
-                    } else {
-                        resolve( docs );
-                    }
-                })
-                .catch(( error ) => {
-                    reject( error );
-                })
-        };
-
-        getDocs( 1 );
-    });
+    getDocs(1);
+  });
 };
-
-
 
 /**
  *
  * Mapping for `site.navi` links referencing `Page` documents
  *
  */
-const getNavi = ( type ) => {
-    let ret = false;
+const getNavi = (type) => {
+  let ret = false;
 
-    cache.navi.items.forEach(( item ) => {
-        if ( item.uid === type ) {
-            ret = item;
-        }
-    });
+  cache.navi.items.forEach((item) => {
+    if (item.uid === type) {
+      ret = item;
+    }
+  });
 
-    return ret;
+  return ret;
 };
-
-
 
 /**
  *
  * Get valid `ref` for Prismic API data ( handles previews ).
  *
  */
-const getRef = ( req, api ) => {
-    let ref = null;
+const getRef = (req, api) => {
+  let ref = null;
 
-    // Preview sessions
-    // Formerly used for the live node app deployments...
-    // if ( req && req.cookies && req.cookies[ prismicJS.previewCookie ] ) {
-    //     ref = req.cookies[ prismicJS.previewCookie ];
-    // }
+  // Preview sessions
+  // Formerly used for the live node app deployments...
+  // if ( req && req.cookies && req.cookies[ prismicJS.previewCookie ] ) {
+  //     ref = req.cookies[ prismicJS.previewCookie ];
+  // }
 
-    // Prismic releases
-    if ( core.config.api.release ) {
-        ref = cache.api.refs.find(( ref ) => {
-            return (ref.label === core.config.api.release);
-        });
-    }
+  // Prismic releases
+  if (core.config.api.release) {
+    ref = cache.api.refs.find((ref) => {
+      return ref.label === core.config.api.release;
+    });
+  }
 
-    return ref ? ref.ref : cache.api.masterRef.ref;
+  return ref ? ref.ref : cache.api.masterRef.ref;
 };
-
-
 
 /**
  *
  * Get one document from all documents.
  *
  */
-const getDoc = ( uid, documents ) => {
-    return documents.find(( doc ) => {
-        return (doc.uid === uid);
-    });
+const getDoc = (uid, documents) => {
+  return documents.find((doc) => {
+    return doc.uid === uid;
+  });
 };
-
-
 
 /**
  *
@@ -337,8 +321,6 @@ const getDoc = ( uid, documents ) => {
 //
 //     return api.form( form ).pageSize( 100 ).ref( getRef( req, api ) );
 // };
-
-
 
 /**
  *
@@ -372,12 +354,10 @@ const getDoc = ( uid, documents ) => {
 //     });
 // };
 
-
-
 module.exports = {
-    cache,
-    getApi,
-    getSite,
-    getPage,
-    getDocs
+  cache,
+  getApi,
+  getSite,
+  getPage,
+  getDocs,
 };

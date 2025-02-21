@@ -1,49 +1,47 @@
 "use strict";
 
-
-
-const express = require( "express" );
+const express = require("express");
 const expressApp = express();
-const compression = require( "compression" );
-const cookieParser = require( "cookie-parser" );
-const bodyParser = require( "body-parser" );
-const lager = require( "properjs-lager" );
-const csurf = require( "csurf" );
+const compression = require("compression");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const lager = require("properjs-lager");
+const csurf = require("csurf");
 const listeners = {};
 const core = {
-    query: require( "./query" ),
-    config: require( "../../clutch.config" ),
-    content: require( "./content" ),
-    template: require( "./template" )
+  query: require("./query"),
+  config: require("../../clutch.config"),
+  content: require("./content"),
+  template: require("./template"),
 };
-const ContextObject = require( "../class/ContextObject" );
+const ContextObject = require("../class/ContextObject");
 const checkCSRF = csurf({
-    cookie: true
+  cookie: true,
 });
-const http = require( "http" );
-const fs = require( "fs" );
-const stasis = require( `../generators/${core.config.api.adapter}.static` );
+const http = require("http");
+const fs = require("fs");
+const stasis = require(`../generators/${core.config.api.adapter}.static`);
 let httpServer = null;
 let cacheIndex = 0;
-
-
 
 /**
  *
  * Configure Express Middleware.
  *
  */
-expressApp.use( cookieParser() );
-expressApp.use( bodyParser.json() );
-expressApp.use( bodyParser.urlencoded({
-    extended: true
-}));
-expressApp.use( compression( core.config.compression ) );
-expressApp.use( express.static( core.config.template.staticDir, {
-    maxAge: core.config.static.maxAge
-}));
-
-
+expressApp.use(cookieParser());
+expressApp.use(bodyParser.json());
+expressApp.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+);
+expressApp.use(compression(core.config.compression));
+expressApp.use(
+  express.static(core.config.template.staticDir, {
+    maxAge: core.config.static.maxAge,
+  }),
+);
 
 /**
  *
@@ -51,95 +49,85 @@ expressApp.use( express.static( core.config.template.staticDir, {
  *
  */
 const setRoutes = () => {
-    // SYSTEM
-    expressApp.get( "/robots.txt", getRobots );
-    expressApp.get( "/sitemap.xml", getSitemap );
+  // SYSTEM
+  expressApp.get("/robots.txt", getRobots);
+  expressApp.get("/sitemap.xml", getSitemap);
 
-    // SYSTEM => OLD
-    // expressApp.get( "/preview", getPreview );
-    // expressApp.post( "/webhook", postWebhook );
+  // SYSTEM => OLD
+  // expressApp.get( "/preview", getPreview );
+  // expressApp.post( "/webhook", postWebhook );
 
-    // URI => HTML?format=json
-    // URI => HTML?nocache=420
-    expressApp.get( "/", checkCSRF, setReq, getPage );
-    expressApp.get( "/:type", checkCSRF, setReq, getPage );
-    expressApp.get( "/:type/:uid", checkCSRF, setReq, getPage );
-    expressApp.get( "/:type/:uid/index.json", checkCSRF, setReq, getPage );
+  // URI => HTML?format=json
+  // URI => HTML?nocache=420
+  expressApp.get("/", checkCSRF, setReq, getPage);
+  expressApp.get("/:type", checkCSRF, setReq, getPage);
+  expressApp.get("/:type/:uid", checkCSRF, setReq, getPage);
+  expressApp.get("/:type/:uid/index.json", checkCSRF, setReq, getPage);
 };
-
-
-
 
 /**
  *
  * Request handling.
  *
  */
-const setReq = ( req, res, next ) => {
-    req.params.type = req.params.type || core.config.homepage;
+const setReq = (req, res, next) => {
+  req.params.type = req.params.type || core.config.homepage;
 
-    next();
+  next();
 };
-const getKey = ( type ) => {
-    const key = type;
+const getKey = (type) => {
+  const key = type;
 
-    return key || core.config.homepage;
+  return key || core.config.homepage;
 };
-
-
 
 /**
  *
  * :GET Pages
  *
  */
-const getPage = ( req, res ) => {
-    const key = getKey( req.params.type );
-    const done = () => {
-        const rJson = /\.json$/;
-        const isStaticJson = rJson.test( req.path );
-        const isServerJson = (req.query.format === "json");
+const getPage = (req, res) => {
+  const key = getKey(req.params.type);
+  const done = () => {
+    const rJson = /\.json$/;
+    const isStaticJson = rJson.test(req.path);
+    const isServerJson = req.query.format === "json";
 
-        if ( isStaticJson || isServerJson ) {
-            if ( isStaticJson && rJson.test( req.params.uid ) ) {
-                delete req.params.uid;
-            }
+    if (isStaticJson || isServerJson) {
+      if (isStaticJson && rJson.test(req.params.uid)) {
+        delete req.params.uid;
+      }
 
-            core.query.getApi( req, res, listeners[ key ] ).then(( result ) => {
-                if ( isServerJson ) {
-                    res.status( 200 ).json( result );
-
-                } else {
-                    res.status( 200 ).send( JSON.stringify( result ) );
-                }
-            });
-
+      core.query.getApi(req, res, listeners[key]).then((result) => {
+        if (isServerJson) {
+          res.status(200).json(result);
         } else {
-            core.content.getPage( req, res, listeners[ key ] ).then(( callback ) => {
-                // Handshake callback
-                callback(( status, html ) => {
-                    res.status( status ).send( html );
-                });
-            });
+          res.status(200).send(JSON.stringify(result));
         }
-    };
-
-    // Local CACHEBUSTER!!!
-    if ( req.query.nocache ) {
-        cacheIndex = Number( req.query.nocache );
-
-        core.query.getSite().then(() => {
-            lager.cache( `[Clutch] Cache query index ${cacheIndex}` );
-
-            done();
-        });
-
+      });
     } else {
-        done();
+      core.content.getPage(req, res, listeners[key]).then((callback) => {
+        // Handshake callback
+        callback((status, html) => {
+          res.status(status).send(html);
+        });
+      });
     }
+  };
+
+  // Local CACHEBUSTER!!!
+  if (req.query.nocache) {
+    cacheIndex = Number(req.query.nocache);
+
+    core.query.getSite().then(() => {
+      lager.cache(`[Clutch] Cache query index ${cacheIndex}`);
+
+      done();
+    });
+  } else {
+    done();
+  }
 };
-
-
 
 /**
  *
@@ -166,43 +154,36 @@ const getPage = ( req, res ) => {
 //     // Always resolve with a 200 and some text
 //     res.status( 200 ).send( "success" );
 // };
-const getSitemap = ( req, res ) => {
-    const sitemap = require( `../generators/${core.config.api.adapter}.sitemap` );
+const getSitemap = (req, res) => {
+  const sitemap = require(`../generators/${core.config.api.adapter}.sitemap`);
 
-    sitemap.generate().then(( xml ) => {
-        res.set( "Content-Type", "text/xml" ).status( 200 ).send( xml );
-    });
-
+  sitemap.generate().then((xml) => {
+    res.set("Content-Type", "text/xml").status(200).send(xml);
+  });
 };
-const getRobots = ( req, res ) => {
-    const robots = require( `../generators/${core.config.api.adapter}.robots` );
+const getRobots = (req, res) => {
+  const robots = require(`../generators/${core.config.api.adapter}.robots`);
 
-    robots.generate().then(( txt ) => {
-        res.set( "Content-Type", "text/plain" ).status( 200 ).send( txt );
-    });
-
+  robots.generate().then((txt) => {
+    res.set("Content-Type", "text/plain").status(200).send(txt);
+  });
 };
-
-
 
 /**
  *
  * Middleware checks
  *
  */
-const checkOrigin = ( req, res, next ) => {
-    // No origin means not CORS :-)
-    if ( !req.headers.origin ) {
-        next();
-
-    } else {
-        res.status( 200 ).json({
-            error: "Invalid origin for request"
-        });
-    }
+const checkOrigin = (req, res, next) => {
+  // No origin means not CORS :-)
+  if (!req.headers.origin) {
+    next();
+  } else {
+    res.status(200).json({
+      error: "Invalid origin for request",
+    });
+  }
 };
-
-
 
 /**
  *
@@ -210,46 +191,45 @@ const checkOrigin = ( req, res, next ) => {
  *
  */
 module.exports = {
-    /**
-     *
-     * Handle router subscribe.
-     *
-     */
-    on ( type, handlers ) {
-        const key = getKey( type );
+  /**
+   *
+   * Handle router subscribe.
+   *
+   */
+  on(type, handlers) {
+    const key = getKey(type);
 
-        // One handler per route
-        if ( !listeners[ key ] ) {
-            listeners[ key ] = {
-                type: type,
-                handlers: handlers
-            };
-        }
-    },
-
-
-    /**
-     *
-     * Start the Express {app}.
-     *
-     */
-    init () {
-        return new Promise(( resolve, reject ) => {
-            // Init routes
-            setRoutes();
-
-            // Fetch ./template/pages listing
-            core.template.getPages().then(() => {
-                // Fetch Site JSON
-                core.query.getSite().then(() => {
-                    httpServer = http.createServer( expressApp );
-                    httpServer.listen( core.config.express.port );
-
-                    stasis.clean( core.config ).then( resolve );
-
-                    lager.cache( `[Clutch] Server Initialized` );
-                });
-            });
-        });
+    // One handler per route
+    if (!listeners[key]) {
+      listeners[key] = {
+        type: type,
+        handlers: handlers,
+      };
     }
+  },
+
+  /**
+   *
+   * Start the Express {app}.
+   *
+   */
+  init() {
+    return new Promise((resolve, reject) => {
+      // Init routes
+      setRoutes();
+
+      // Fetch ./template/pages listing
+      core.template.getPages().then(() => {
+        // Fetch Site JSON
+        core.query.getSite().then(() => {
+          httpServer = http.createServer(expressApp);
+          httpServer.listen(core.config.express.port);
+
+          stasis.clean(core.config).then(resolve);
+
+          lager.cache(`[Clutch] Server Initialized`);
+        });
+      });
+    });
+  },
 };

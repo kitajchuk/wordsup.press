@@ -8,7 +8,6 @@
  */
 import detect from "./detect";
 
-
 /**
  *
  * @description Apply a translate3d transform
@@ -20,10 +19,9 @@ import detect from "./detect";
  * @memberof core.util
  *
  */
-const translate3d = function ( el, x, y, z ) {
-    el.style[ detect.getPrefixed( "transform" ) ] = `translate3d( ${x}, ${y}, ${z} )`;
+const translate3d = function (el, x, y, z) {
+  el.style[detect.getPrefixed("transform")] = `translate3d( ${x}, ${y}, ${z} )`;
 };
-
 
 /**
  *
@@ -34,18 +32,17 @@ const translate3d = function ( el, x, y, z ) {
  * @returns {boolean}
  *
  */
-const isElementVisible = function ( el ) {
-    let ret = false;
+const isElementVisible = function (el) {
+  let ret = false;
 
-    if ( el ) {
-        const bounds = el.getBoundingClientRect();
+  if (el) {
+    const bounds = el.getBoundingClientRect();
 
-        ret = ( bounds.top < window.innerHeight && bounds.bottom > 0 );
-    }
+    ret = bounds.top < window.innerHeight && bounds.bottom > 0;
+  }
 
-    return ret;
+  return ret;
 };
-
 
 /**
  *
@@ -56,16 +53,10 @@ const isElementVisible = function ( el ) {
  *
  */
 const noop = function () {
-    return true;
+  return true;
 };
-
-
 
 /******************************************************************************
  * Export
-*******************************************************************************/
-export {
-    noop,
-    translate3d,
-    isElementVisible,
-};
+ *******************************************************************************/
+export { noop, translate3d, isElementVisible };

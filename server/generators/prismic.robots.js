@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 /**
  *
  * Robots.txt generator for Prismic
@@ -15,9 +13,9 @@
  *
  *
  */
-const path = require( "path" );
-const config = require( "../../clutch.config" );
-const lager = require( "properjs-lager" );
+const path = require("path");
+const config = require("../../clutch.config");
+const lager = require("properjs-lager");
 const botsText = `
 # Clutch Robots Txt
 
@@ -40,32 +38,28 @@ Disallow: /api/
 Sitemap: ${config.url}/sitemap.xml
 `;
 
-
-
 const createRobots = () => {
-    return new Promise(( resolve, reject ) => {
-        const rules = [];
+  return new Promise((resolve, reject) => {
+    const rules = [];
 
-        for ( let type in config.generate.robots ) {
-            if ( config.generate.robots.hasOwnProperty( type ) ) {
-                if ( config.generate.robots[ type ] === false ) {
-                    rules.push( `Disallow: /${type}/` );
-                }
-            }
+    for (let type in config.generate.robots) {
+      if (config.generate.robots.hasOwnProperty(type)) {
+        if (config.generate.robots[type] === false) {
+          rules.push(`Disallow: /${type}/`);
         }
+      }
+    }
 
-        const finalTXT = botsText.replace( /\@content/g, rules.join( "\n" ) );
+    const finalTXT = botsText.replace(/\@content/g, rules.join("\n"));
 
-        resolve( finalTXT );
-    });
+    resolve(finalTXT);
+  });
 };
 
-
-
 module.exports = {
-    generate () {
-        return new Promise(( resolve, reject ) => {
-            createRobots().then( resolve ).catch( reject );
-        });
-    }
+  generate() {
+    return new Promise((resolve, reject) => {
+      createRobots().then(resolve).catch(reject);
+    });
+  },
 };

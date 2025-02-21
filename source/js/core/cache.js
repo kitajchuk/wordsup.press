@@ -1,6 +1,5 @@
 import Store from "./Store";
 
-
 /**
  *
  * @public
@@ -11,6 +10,6 @@ import Store from "./Store";
  *
  */
 export default new Store({
-    // If TRUE the Store will use LocalStorage...
-    enableStorage: false
+  // If TRUE the Store will use LocalStorage...
+  enableStorage: false,
 });

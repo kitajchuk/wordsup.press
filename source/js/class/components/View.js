@@ -1,6 +1,5 @@
 import * as core from "../../core";
 
-
 /**
  *
  * @public
@@ -13,117 +12,109 @@ import * as core from "../../core";
  *
  */
 class View {
-    constructor ( elem, data ) {
-        this.data = data;
-        this.element = elem;
-        this.id = this.data.uid;
-        this.endpoint = this.data.url;
-        this.json = null;
-        this.controllers = {};
-        this.method = "GET";
+  constructor(elem, data) {
+    this.data = data;
+    this.element = elem;
+    this.id = this.data.uid;
+    this.endpoint = this.data.url;
+    this.json = null;
+    this.controllers = {};
+    this.method = "GET";
 
-        this.init();
-    }
+    this.init();
+  }
 
+  /**
+   *
+   * @instance
+   * @description Run the View initialization stack
+   * @memberof View
+   * @method init
+   *
+   */
+  init() {
+    this.load().then(this.done.bind(this));
+  }
 
-    /**
-     *
-     * @instance
-     * @description Run the View initialization stack
-     * @memberof View
-     * @method init
-     *
-     */
-    init () {
-        this.load().then( this.done.bind( this ) );
-    }
+  done(json) {
+    this.json = json;
 
+    this.render();
+    this.exec();
+  }
 
-    done ( json ) {
-        this.json = json;
+  /**
+   *
+   * @instance
+   * @description Get the data for the view
+   * @memberof View
+   * @method load
+   * @returns {Promise}
+   *
+   */
+  load() {
+    return new Promise((resolve) => {
+      const cache = core.cache.get(this.id);
 
-        this.render();
-        this.exec();
-    }
+      // Pre-render from cache
+      if (cache) {
+        this.done(cache);
+      }
 
+      // Update render from JSON
+      fetch(this.endpoint, {
+        method: this.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          // Update the cache from AJAX
+          core.cache.set(this.id, json);
 
-    /**
-     *
-     * @instance
-     * @description Get the data for the view
-     * @memberof View
-     * @method load
-     * @returns {Promise}
-     *
-     */
-    load () {
-        return new Promise(( resolve ) => {
-            const cache = core.cache.get( this.id );
-
-            // Pre-render from cache
-            if ( cache ) {
-                this.done( cache );
-            }
-
-            // Update render from JSON
-            fetch( this.endpoint, {
-                method: this.method,
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then( ( res ) => res.json() )
-            .then(( json ) => {
-                // Update the cache from AJAX
-                core.cache.set( this.id, json );
-
-                resolve( json );
-            });
+          resolve(json);
         });
-    }
+    });
+  }
 
+  /**
+   *
+   * @instance
+   * @description Render the view template
+   * @memberof View
+   * @method render
+   *
+   */
+  render() {
+    // Webpack es6Module { __esModule: true, default: f }
+    const view = require(`../../views/${this.id}`);
 
-    /**
-     *
-     * @instance
-     * @description Render the view template
-     * @memberof View
-     * @method render
-     *
-     */
-    render () {
-        // Webpack es6Module { __esModule: true, default: f }
-        const view = require( `../../views/${this.id}` );
+    this.element[0].innerHTML = view.default(this);
+  }
 
-        this.element[ 0 ].innerHTML = view.default( this );
-    }
+  /**
+   *
+   * @instance
+   * @description Initialize controllers
+   * @memberof View
+   * @method exec
+   *
+   */
+  exec() {}
 
-
-    /**
-     *
-     * @instance
-     * @description Initialize controllers
-     * @memberof View
-     * @method exec
-     *
-     */
-    exec () {}
-
-
-    /**
-     *
-     * @instance
-     * @description Stop the animation frame
-     * @memberof View
-     * @method destroy
-     *
-     */
-    destroy () {}
+  /**
+   *
+   * @instance
+   * @description Stop the animation frame
+   * @memberof View
+   * @method destroy
+   *
+   */
+  destroy() {}
 }
-
-
 
 /******************************************************************************
  * Export
-*******************************************************************************/
+ *******************************************************************************/
 export default View;

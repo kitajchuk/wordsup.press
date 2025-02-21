@@ -1,0 +1,35 @@
+# Ignore everything:
+/*
+
+# Except these files:
+!/*.js
+
+!/source/
+/source/*
+!/source/js/
+/source/js/**/*.*
+!/source/js/**/*.js
+
+!/server/
+/server/*
+!/server/core/
+/server/core/**/*.*
+!/server/core/**/*.js
+
+!/server/adapters/
+/server/adapters/**/*.*
+!/server/adapters/**/*.js
+
+!/server/generators/
+/server/generators/**/*.*
+!/server/generators/**/*.js
+
+!/server/class/
+/server/class/**/*.*
+!/server/class/**/*.js
+
+!/functions/
+/functions/*
+!/functions/services/
+/functions/services/**/*.*
+!/functions/services/**/*.js
