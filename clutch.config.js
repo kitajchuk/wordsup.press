@@ -59,11 +59,11 @@ const config = {
   },
   // Express.js config
   express: {
-    port: 8000,
+    port: 3000,
   },
   // Browser-sync config
   browser: {
-    port: 8001,
+    port: 3001,
   },
   // Static assets config
   static: {
